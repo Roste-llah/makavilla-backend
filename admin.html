@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maka-Villa Admin Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #000;
+            border-bottom: 2px solid #d4af37;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #d4af37;
+            font-size: 24px;
+        }
+
+        header span {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        /* LOGIN */
+
+        #loginSection {
+            max-width: 420px;
+            margin: 80px auto;
+            background: #1b1b1b;
+            padding: 35px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+
+        #loginSection h2 {
+            text-align: center;
+            color: #d4af37;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 6px;
+            background: #111;
+            color: white;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        button {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #d4af37;
+            color: #000;
+        }
+
+        .login-btn:hover {
+            background: #f0cc55;
+        }
+
+        #loginMessage {
+            text-align: center;
+            margin-top: 15px;
+            color: #ff7070;
+        }
+
+        /* DASHBOARD */
+
+        #dashboard {
+            display: none;
+        }
+
+        .dashboard-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-top h2 {
+            color: #d4af37;
+        }
+
+        .logout-btn {
+            background: #333;
+            color: white;
+        }
+
+        .logout-btn:hover {
+            background: #444;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat {
+            background: #1b1b1b;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+
+        .stat h3 {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat p {
+            color: #d4af37;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .booking {
+            background: #1b1b1b;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .booking-header h3 {
+            color: #d4af37;
+        }
+
+        .booking p {
+            margin: 8px 0;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        .booking strong {
+            color: white;
+        }
+
+        .status {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #665400;
+            color: #ffe88a;
+        }
+
+        .confirmed {
+            background: #164d28;
+            color: #7dff9d;
+        }
+
+        .cancelled {
+            background: #5b2020;
+            color: #ff8b8b;
+        }
+
+        .actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .confirm-btn {
+            background: #238636;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #b42318;
+            color: white;
+        }
+
+        .pending-btn {
+            background: #8a7200;
+            color: white;
+        }
+
+        .refresh-btn {
+            background: #d4af37;
+            color: black;
+        }
+
+        #loading {
+            text-align: center;
+            color: #aaa;
+            padding: 30px;
+        }
+
+        #noBookings {
+            display: none;
+            text-align: center;
+            background: #1b1b1b;
+            padding: 40px;
+            border-radius: 10px;
+            color: #aaa;
+        }
+
+        @media (max-width: 700px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 92%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ Maka-Villa Admin</h1>
+    <span>Bar • Restaurant • Accommodation</span>
+</header>
+
+<div class="container">
+
+    <!-- LOGIN -->
+
+    <section id="loginSection">
+
+        <h2>Admin Login</h2>
+
+        <form id="loginForm">
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Username"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required
+            >
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <p id="loginMessage"></p>
+
+    </section>
+
+
+    <!-- DASHBOARD -->
+
+    <section id="dashboard">
+
+        <div class="dashboard-top">
+
+            <h2>Booking Dashboard</h2>
+
+            <div>
+
+                <button
+                    class="refresh-btn"
+                    onclick="loadBookings()"
+                >
+                    🔄 Refresh
+                </button>
+
+                <button
+                    class="logout-btn"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+            <div class="stat">
+                <h3>Total Bookings</h3>
+                <p id="totalBookings">0</p>
+            </div>
+
+            <div class="stat">
+                <h3>Pending</h3>
+                <p id="pendingBookings">0</p>
+            </div>
+
+            <div class="stat">
+                <h3>Confirmed</h3>
+                <p id="confirmedBookings">0</p>
+            </div>
+
+            <div class="stat">
+                <h3>Cancelled</h3>
+                <p id="cancelledBookings">0</p>
+            </div>
+
+        </div>
+
+
+        <div id="loading">
+            Loading bookings...
+        </div>
+
+        <div id="bookingsList"></div>
+
+        <div id="noBookings">
+            No bookings have been received yet.
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+const API_URL =
+    "https://makavilla-backend-2026.onrender.com";
+
+
+let adminUsername = "";
+let adminPassword = "";
+
+
+/* LOGIN */
+
+document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const username =
+            document.getElementById("username").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const message =
+            document.getElementById("loginMessage");
+
+        message.textContent = "Logging in...";
+        message.style.color = "#d4af37";
+
+        try {
+
+            const response = await fetch(
+                `${API_URL}/api/admin/login`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Login failed"
+                );
+            }
+
+            adminUsername = username;
+            adminPassword = password;
+
+            document.getElementById(
+                "loginSection"
+            ).style.display = "none";
+
+            document.getElementById(
+                "dashboard"
+            ).style.display = "block";
+
+            loadBookings();
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                error.message ||
+                "Could not connect to the backend.";
+
+            message.style.color = "#ff7070";
+        }
+
+    });
+
+
+/* LOAD BOOKINGS */
+
+async function loadBookings() {
+
+    const loading =
+        document.getElementById("loading");
+
+    const list =
+        document.getElementById("bookingsList");
+
+    const noBookings =
+        document.getElementById("noBookings");
+
+    loading.style.display = "block";
+    list.innerHTML = "";
+    noBookings.style.display = "none";
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/admin/bookings`,
+            {
+                method: "GET",
+
+                headers: {
+                    "x-admin-username":
+                        adminUsername,
+
+                    "x-admin-password":
+                        adminPassword
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Could not load bookings."
+            );
+        }
+
+        const bookings =
+            data.bookings || [];
+
+        loading.style.display = "none";
+
+        updateStatistics(bookings);
+
+        if (bookings.length === 0) {
+
+            noBookings.style.display = "block";
+            return;
+        }
+
+        bookings.forEach(function(booking) {
+
+            list.appendChild(
+                createBookingCard(booking)
+            );
+
+        });
+
+    } catch (error) {
+
+        loading.style.display = "none";
+
+        list.innerHTML = `
+            <div class="booking">
+                <p style="color:#ff7070;">
+                    ${escapeHtml(error.message)}
+                </p>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* STATISTICS */
+
+function updateStatistics(bookings) {
+
+    let pending = 0;
+    let confirmed = 0;
+    let cancelled = 0;
+
+    bookings.forEach(function(booking) {
+
+        const status =
+            String(booking.status || "Pending")
+                .toLowerCase();
+
+        if (status === "pending") {
+            pending++;
+        }
+
+        if (status === "confirmed") {
+            confirmed++;
+        }
+
+        if (status === "cancelled") {
+            cancelled++;
+        }
+
+    });
+
+    document.getElementById(
+        "totalBookings"
+    ).textContent = bookings.length;
+
+    document.getElementById(
+        "pendingBookings"
+    ).textContent = pending;
+
+    document.getElementById(
+        "confirmedBookings"
+    ).textContent = confirmed;
+
+    document.getElementById(
+        "cancelledBookings"
+    ).textContent = cancelled;
+
+}
+
+
+/* CREATE BOOKING CARD */
+
+function createBookingCard(booking) {
+
+    const card =
+        document.createElement("div");
+
+    card.className = "booking";
+
+    const status =
+        booking.status || "Pending";
+
+    const statusClass =
+        status.toLowerCase();
+
+    card.innerHTML = `
+
+        <div class="booking-header">
+
+            <h3>
+                Booking #${escapeHtml(
+                    booking.id || "N/A"
+                )}
+            </h3>
+
+            <span class="status ${statusClass}">
+                ${escapeHtml(status)}
+            </span>
+
+        </div>
+
+        <p>
+            <strong>Customer:</strong>
+            ${escapeHtml(
+                booking.name ||
+                booking.fullName ||
+                "N/A"
+            )}
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            ${escapeHtml(
+                booking.phone || "N/A"
+            )}
+        </p>
+
+        <p>
+            <strong>Reservation:</strong>
+            ${escapeHtml(
+                booking.reservationType ||
+                booking.type ||
+                "N/A"
+            )}
+        </p>
+
+        <p>
+            <strong>Guests:</strong>
+            ${escapeHtml(
+                booking.guests ||
+                booking.numberOfGuests ||
+                "N/A"
+            )}
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            ${escapeHtml(
+                booking.date || "N/A"
+            )}
+        </p>
+
+        <p>
+            <strong>Preferred Time:</strong>
+            ${escapeHtml(
+                booking.time ||
+                booking.preferredTime ||
+                "N/A"
+            )}
+        </p>
+
+        <p>
+            <strong>Message:</strong>
+            ${escapeHtml(
+                booking.message ||
+                booking.additionalMessage ||
+                "None"
+            )}
+        </p>
+
+        <div class="actions">
+
+            <button
+                class="confirm-btn"
+                onclick="updateStatus('${escapeJs(
+                    booking.id
+                )}', 'Confirmed')"
+            >
+                ✅ Confirm
+            </button>
+
+            <button
+                class="cancel-btn"
+                onclick="updateStatus('${escapeJs(
+                    booking.id
+                )}', 'Cancelled')"
+            >
+                ❌ Cancel
+            </button>
+
+            <button
+                class="pending-btn"
+                onclick="updateStatus('${escapeJs(
+                    booking.id
+                )}', 'Pending')"
+            >
+                ⏳ Pending
+            </button>
+
+        </div>
+    `;
+
+    return card;
+}
+
+
+/* UPDATE STATUS */
+
+async function updateStatus(id, status) {
+
+    if (!confirm(
+        `Change this booking to ${status}?`
+    )) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/admin/bookings/${encodeURIComponent(id)}`,
+            {
+                method: "PATCH",
+
+                headers: {
+                    "Content-Type":
+                        "application/json",
+
+                    "x-admin-username":
+                        adminUsername,
+
+                    "x-admin-password":
+                        adminPassword
+                },
+
+                body: JSON.stringify({
+                    status: status
+                })
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Could not update booking."
+            );
+        }
+
+        alert(
+            `Booking ${status.toLowerCase()} successfully.`
+        );
+
+        loadBookings();
+
+    } catch (error) {
+
+        alert(
+            error.message ||
+            "Could not update booking."
+        );
+
+    }
+
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    adminUsername = "";
+    adminPassword = "";
+
+    document.getElementById(
+        "dashboard"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loginSection"
+    ).style.display = "block";
+
+    document.getElementById(
+        "password"
+    ).value = "";
+
+}
+
+
+/* SECURITY HELPERS */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function escapeJs(value) {
+
+    return String(value ?? "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"');
+
+}
+
+</script>
+
+</body>
+</html>
