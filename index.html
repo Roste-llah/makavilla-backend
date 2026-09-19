@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maka-Villa Bar, Restaurant & Accommodation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #222;
+            background: #f8f6f1;
+            line-height: 1.6;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #111;
+            padding: 15px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+        }
+
+        .logo {
+            color: #d4af37;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1800&q=80")
+                center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 100px 20px 50px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 75px);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 21px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #d4af37;
+            color: #111;
+            padding: 14px 28px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #f1d36b;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        section {
+            padding: 80px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .section-title p {
+            color: #666;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-content h3 {
+            color: #b18b1d;
+            margin-bottom: 10px;
+        }
+
+        .about {
+            background: white;
+        }
+
+        .about-container {
+            max-width: 950px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .about-container p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .booking {
+            background:
+                linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.78)),
+                url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80")
+                center/cover;
+            color: white;
+        }
+
+        .booking .section-title h2,
+        .booking .section-title p {
+            color: white;
+        }
+
+        .booking-form {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            color: #222;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 20px;
+            font-size: 17px;
+        }
+
+        #bookingStatus {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            text-align: center;
+        }
+
+        .success {
+            background: #dff5e3;
+            color: #176b2c;
+        }
+
+        .error {
+            background: #ffe0e0;
+            color: #9b1c1c;
+        }
+
+        .contact {
+            background: #111;
+            color: white;
+        }
+
+        .contact .section-title h2,
+        .contact .section-title p {
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .contact-card {
+            background: #1d1d1d;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .contact-card a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .contact-card a:hover {
+            color: #d4af37;
+        }
+
+        footer {
+            background: #080808;
+            color: #aaa;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav {
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        ✦ MAKA-VILLA
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#booking">Booking</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+</header>
+
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <h1>Welcome to Maka-Villa</h1>
+
+        <p>Bar • Restaurant • Accommodation</p>
+
+        <p>
+            Relax, dine and enjoy a memorable experience
+            in Murang'a, Kenya.
+        </p>
+
+        <a href="#booking" class="btn">
+            Make a Reservation
+        </a>
+
+    </div>
+
+</section>
+
+
+<section id="services">
+
+    <div class="section-title">
+
+        <h2>Our Services</h2>
+
+        <p>
+            Everything you need for a comfortable and enjoyable stay.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <img
+                src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80"
+                alt="Restaurant"
+            >
+
+            <div class="card-content">
+
+                <h3>Restaurant</h3>
+
+                <p>
+                    Enjoy delicious meals prepared in a comfortable
+                    and welcoming environment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
+                alt="Bar and Lounge"
+            >
+
+            <div class="card-content">
+
+                <h3>Bar & Lounge</h3>
+
+                <p>
+                    Relax and enjoy your time in our comfortable
+                    bar and lounge environment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80"
+                alt="Accommodation"
+            >
+
+            <div class="card-content">
+
+                <h3>Accommodation</h3>
+
+                <p>
+                    Comfortable accommodation for guests looking
+                    for a peaceful place to stay.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <img
+                src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=80"
+                alt="Events"
+            >
+
+            <div class="card-content">
+
+                <h3>Events & Functions</h3>
+
+                <p>
+                    A suitable space for meetings, celebrations,
+                    gatherings and special occasions.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about" id="about">
+
+    <div class="section-title">
+
+        <h2>About Maka-Villa</h2>
+
+    </div>
+
+
+    <div class="about-container">
+
+        <p>
+            Maka-Villa is a hospitality destination located in
+            Murang'a, Kenya, offering restaurant, bar, lounge
+            and accommodation services.
+        </p>
+
+        <p>
+            Our goal is to provide guests with a comfortable,
+            welcoming and enjoyable environment for dining,
+            relaxing, staying and celebrating special moments.
+        </p>
+
+        <p>
+            Whether you are visiting for a meal, relaxing with
+            friends, staying overnight or planning an event,
+            Maka-Villa welcomes you.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="booking" id="booking">
+
+    <div class="section-title">
+
+        <h2>Make a Reservation</h2>
+
+        <p>
+            Fill in the form below and your reservation will be
+            sent directly to Maka-Villa.
+        </p>
+
+    </div>
+
+
+    <form class="booking-form" id="bookingForm">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name *
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number *
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="e.g. 0742020633"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="type">
+                    Reservation Type *
+                </label>
+
+                <select id="type" required>
+
+                    <option value="">
+                        Select reservation type
+                    </option>
+
+                    <option value="Restaurant">
+                        Restaurant
+                    </option>
+
+                    <option value="Bar & Lounge">
+                        Bar & Lounge
+                    </option>
+
+                    <option value="Accommodation">
+                        Accommodation
+                    </option>
+
+                    <option value="Event / Function">
+                        Event / Function
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="guests">
+                    Number of Guests *
+                </label>
+
+                <input
+                    type="number"
+                    id="guests"
+                    min="1"
+                    placeholder="Number of guests"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="date">
+                    Date *
+                </label>
+
+                <input
+                    type="date"
+                    id="date"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="time">
+                    Preferred Time *
+                </label>
+
+                <input
+                    type="time"
+                    id="time"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label for="message">
+                    Additional Message
+                </label>
+
+                <textarea
+                    id="message"
+                    placeholder="Any additional information or special requests?"
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn submit-btn"
+            id="submitButton"
+        >
+            Submit Reservation
+        </button>
+
+
+        <div id="bookingStatus"></div>
+
+    </form>
+
+</section>
+
+
+<section class="contact" id="contact">
+
+    <div class="section-title">
+
+        <h2>Contact Maka-Villa</h2>
+
+        <p>
+            We would be happy to hear from you.
+        </p>
+
+    </div>
+
+
+    <div class="contact-grid">
+
+        <div class="contact-card">
+
+            <h3>📞 Phone</h3>
+
+            <a href="tel:+254742020633">
+                0742020633
+            </a>
+
+        </div>
+
+
+        <div class="contact-card">
+
+            <h3>💬 WhatsApp</h3>
+
+            <a
+                href="https://wa.me/254742020633"
+                target="_blank"
+                rel="noopener"
+            >
+                0742020633
+            </a>
+
+        </div>
+
+
+        <div class="contact-card">
+
+            <h3>✉️ Email</h3>
+
+            <a href="mailto:robii254.ke@gmail.com">
+                robii254.ke@gmail.com
+            </a>
+
+        </div>
+
+
+        <div class="contact-card">
+
+            <h3>📍 Location</h3>
+
+            <p>
+                C71, Murang'a, Kenya
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 Maka-Villa Bar, Restaurant & Accommodation.
+        All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+const API_URL = "https://makavilla-backend-2026.onrender.com/api/bookings";
+
+const bookingForm = document.getElementById("bookingForm");
+
+const submitButton = document.getElementById("submitButton");
+
+const bookingStatus = document.getElementById("bookingStatus");
+
+
+bookingForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    const booking = {
+
+        name: document.getElementById("name").value.trim(),
+
+        phone: document.getElementById("phone").value.trim(),
+
+        type: document.getElementById("type").value,
+
+        guests: document.getElementById("guests").value,
+
+        date: document.getElementById("date").value,
+
+        time: document.getElementById("time").value,
+
+        message: document.getElementById("message").value.trim()
+
+    };
+
+
+    submitButton.disabled = true;
+
+    submitButton.textContent = "Sending Reservation...";
+
+
+    bookingStatus.style.display = "none";
+
+
+    try {
+
+        console.log("Sending booking to:", API_URL);
+
+        console.log("Booking:", booking);
+
+
+        const response = await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(booking)
+
+        });
+
+
+        console.log("Backend response status:", response.status);
+
+
+        const result = await response.json();
+
+
+        console.log("Backend response:", result);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message || "Server rejected the booking."
+            );
+
+        }
+
+
+        if (result.success) {
+
+            bookingStatus.className = "success";
+
+            bookingStatus.style.display = "block";
+
+            bookingStatus.innerHTML = `
+                <strong>✅ Reservation Received!</strong><br><br>
+                Thank you, ${booking.name}.<br>
+                Your reservation has been successfully received
+                by Maka-Villa.<br><br>
+                We will contact you on
+                <strong>${booking.phone}</strong>
+                to confirm your reservation.
+            `;
+
+
+            bookingForm.reset();
+
+
+        } else {
+
+            throw new Error(
+                result.message || "Booking was not accepted."
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error("BOOKING ERROR:", error);
+
+
+        bookingStatus.className = "error";
+
+        bookingStatus.style.display = "block";
+
+        bookingStatus.innerHTML = `
+            <strong>❌ Booking could not be sent.</strong><br><br>
+            ${error.message}<br><br>
+            Please make sure the Maka-Villa backend is running,
+            then try again.
+        `;
+
+    }
+
+
+    submitButton.disabled = false;
+
+    submitButton.textContent = "Submit Reservation";
+
+});
+
+</script>
+
+</body>
+</html>
