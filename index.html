@@ -498,11 +498,108 @@ textarea{
     font-size:16px;
 }
 
+.submit:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
 .form-note{
     text-align:center;
     color:#888;
     font-size:13px;
     margin-top:12px;
+}
+
+/* SUCCESS */
+
+.success-box{
+    display:none;
+    max-width:850px;
+    margin:20px auto 30px;
+    padding:30px;
+    background:#132719;
+    border:1px solid #3fc76a;
+    border-radius:14px;
+    text-align:center;
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+}
+
+.success-icon{
+    font-size:50px;
+    margin-bottom:8px;
+}
+
+.success-box h3{
+    color:#5ee58a;
+    font-size:26px;
+    margin-bottom:8px;
+}
+
+.success-message{
+    color:#ddd;
+    margin-bottom:20px;
+}
+
+.reference-card{
+    background:#0d0d0d;
+    border:1px dashed #d4af37;
+    border-radius:10px;
+    padding:18px;
+    margin:18px auto;
+    max-width:500px;
+}
+
+.reference-label{
+    color:#aaa;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.reference-number{
+    color:#d4af37;
+    font-size:28px;
+    font-weight:bold;
+    margin:5px 0 12px;
+    word-break:break-word;
+}
+
+.copy-btn{
+    background:#d4af37;
+    color:#111;
+    border:0;
+    padding:9px 18px;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.booking-summary{
+    max-width:550px;
+    margin:20px auto;
+    text-align:left;
+    background:#202020;
+    border-radius:10px;
+    padding:18px;
+}
+
+.booking-summary p{
+    padding:6px 0;
+    border-bottom:1px solid #333;
+}
+
+.booking-summary strong{
+    color:#d4af37;
+}
+
+.success-actions{
+    margin-top:18px;
+}
+
+.whatsapp-success{
+    background:#25d366;
+    color:white;
+    border-color:#25d366;
 }
 
 /* GALLERY */
@@ -600,24 +697,6 @@ footer strong{
     z-index:999;
 }
 
-/* SUCCESS */
-
-.success-box{
-    display:none;
-    max-width:850px;
-    margin:20px auto;
-    padding:25px;
-    background:#17351f;
-    border:1px solid #3fc76a;
-    border-radius:10px;
-    text-align:center;
-}
-
-.success-box h3{
-    color:#5ee58a;
-    margin-bottom:8px;
-}
-
 /* MOBILE */
 
 @media(max-width:900px){
@@ -688,6 +767,14 @@ footer strong{
 
     section{
         padding:50px 20px;
+    }
+
+    .success-box{
+        padding:22px 15px;
+    }
+
+    .reference-number{
+        font-size:23px;
     }
 
 }
@@ -858,7 +945,6 @@ reserve tables and request accommodation.
 Browse our food and drinks. Prices shown are sample/indicative prices
 and should be confirmed with Maka-Villa.
 </p>
-
 
 <div class="categories">
 
@@ -1336,16 +1422,53 @@ Reserve a table or request accommodation directly through our website.
 
 <div id="successBox" class="success-box">
 
-<h3>✅ Request Submitted Successfully</h3>
+<div class="success-icon">🎉</div>
 
-<p>
-Your request has been received by Maka-Villa.
+<h3>Reservation Request Received!</h3>
+
+<p class="success-message">
+Thank you for choosing Maka-Villa. Your request has been successfully sent to us.
 </p>
 
-<p>
-Reference:
-<strong id="successReference"></strong>
+<div class="reference-card">
+
+<div class="reference-label">
+Your Booking Reference
+</div>
+
+<div id="successReference" class="reference-number">
+MV-PENDING
+</div>
+
+<button class="copy-btn" onclick="copyReference()">
+📋 Copy Reference
+</button>
+
+</div>
+
+<div id="bookingSummary" class="booking-summary"></div>
+
+<p style="color:#aaa;">
+Please keep your booking reference for future communication with Maka-Villa.
 </p>
+
+<div class="success-actions">
+
+<a
+id="successWhatsApp"
+class="btn whatsapp-success"
+href="#"
+target="_blank">
+💬 Contact Maka-Villa on WhatsApp
+</a>
+
+<button
+class="btn btn-dark"
+onclick="startNewBooking()">
+➕ Make Another Booking
+</button>
+
+</div>
 
 </div>
 
@@ -1809,6 +1932,8 @@ function showRestaurant(){
 
     document.getElementById("accommodationTab").classList.remove("active");
 
+    document.getElementById("successBox").style.display="none";
+
 }
 
 
@@ -1821,6 +1946,8 @@ function showAccommodation(room){
     document.getElementById("restaurantTab").classList.remove("active");
 
     document.getElementById("accommodationTab").classList.add("active");
+
+    document.getElementById("successBox").style.display="none";
 
     if(room){
 
@@ -1858,16 +1985,113 @@ function(){
    SUCCESS
 ========================= */
 
-function showSuccess(reference){
+let latestReference="";
+
+
+function showSuccess(reference,booking,type){
+
+    latestReference=reference || "Pending";
 
     document.getElementById("successReference").textContent=
-    reference || "Pending";
+    latestReference;
+
+
+    let summary="";
+
+    if(type==="Restaurant"){
+
+        summary=`
+        <p><strong>Booking Type:</strong> Restaurant Reservation</p>
+        <p><strong>Name:</strong> ${booking.name}</p>
+        <p><strong>Guests:</strong> ${booking.guests}</p>
+        <p><strong>Date:</strong> ${booking.date}</p>
+        <p><strong>Time:</strong> ${booking.time}</p>
+        `;
+
+    }else{
+
+        summary=`
+        <p><strong>Booking Type:</strong> Accommodation</p>
+        <p><strong>Name:</strong> ${booking.name}</p>
+        <p><strong>Room:</strong> ${booking.roomType}</p>
+        <p><strong>Rooms:</strong> ${booking.rooms}</p>
+        <p><strong>Guests:</strong> ${booking.guests}</p>
+        <p><strong>Check-in:</strong> ${booking.checkin}</p>
+        <p><strong>Check-out:</strong> ${booking.checkout}</p>
+        `;
+
+    }
+
+    document.getElementById("bookingSummary").innerHTML=summary;
+
+
+    const whatsappMessage=
+    "Hello Maka-Villa,%0A%0A"+
+    "I have submitted a "+type+
+    " booking request.%0A%0A"+
+    "Booking Reference: "+
+    encodeURIComponent(latestReference)+
+    "%0A%0AThank you.";
+
+    document.getElementById("successWhatsApp").href=
+    "https://wa.me/254742020633?text="+whatsappMessage;
+
 
     document.getElementById("successBox").style.display="block";
+
 
     document.getElementById("successBox").scrollIntoView({
         behavior:"smooth",
         block:"center"
+    });
+
+}
+
+
+/* =========================
+   COPY REFERENCE
+========================= */
+
+async function copyReference(){
+
+    try{
+
+        await navigator.clipboard.writeText(latestReference);
+
+        const button=document.querySelector(".copy-btn");
+
+        const original=button.textContent;
+
+        button.textContent="✅ Copied!";
+
+        setTimeout(()=>{
+            button.textContent=original;
+        },1800);
+
+    }catch(error){
+
+        alert(
+            "Your booking reference is: "+
+            latestReference
+        );
+
+    }
+
+}
+
+
+/* =========================
+   NEW BOOKING
+========================= */
+
+function startNewBooking(){
+
+    document.getElementById("successBox").style.display="none";
+
+    showRestaurant();
+
+    document.getElementById("booking").scrollIntoView({
+        behavior:"smooth"
     });
 
 }
@@ -1895,13 +2119,13 @@ async function(e){
         type:"Restaurant",
 
         name:
-        document.getElementById("restaurantName").value,
+        document.getElementById("restaurantName").value.trim(),
 
         phone:
-        document.getElementById("restaurantPhone").value,
+        document.getElementById("restaurantPhone").value.trim(),
 
         email:
-        document.getElementById("restaurantEmail").value,
+        document.getElementById("restaurantEmail").value.trim(),
 
         guests:
         Number(document.getElementById("restaurantGuests").value),
@@ -1913,7 +2137,7 @@ async function(e){
         document.getElementById("restaurantTime").value,
 
         message:
-        document.getElementById("restaurantMessage").value
+        document.getElementById("restaurantMessage").value.trim()
 
     };
 
@@ -1953,7 +2177,12 @@ async function(e){
         "Pending";
 
 
-        showSuccess(reference);
+        showSuccess(
+            reference,
+            booking,
+            "Restaurant"
+        );
+
 
         this.reset();
 
@@ -2019,13 +2248,13 @@ async function(e){
         type:"Accommodation",
 
         name:
-        document.getElementById("accommodationName").value,
+        document.getElementById("accommodationName").value.trim(),
 
         phone:
-        document.getElementById("accommodationPhone").value,
+        document.getElementById("accommodationPhone").value.trim(),
 
         email:
-        document.getElementById("accommodationEmail").value,
+        document.getElementById("accommodationEmail").value.trim(),
 
         roomType:
         document.getElementById("roomType").value,
@@ -2043,7 +2272,7 @@ async function(e){
         checkout:checkout,
 
         message:
-        document.getElementById("accommodationMessage").value
+        document.getElementById("accommodationMessage").value.trim()
 
     };
 
@@ -2083,7 +2312,12 @@ async function(e){
         "Pending";
 
 
-        showSuccess(reference);
+        showSuccess(
+            reference,
+            booking,
+            "Accommodation"
+        );
+
 
         this.reset();
 
