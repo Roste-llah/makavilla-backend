@@ -1,379 +1,931 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>Maka-Villa | Bar, Restaurant & Accommodation</title>
+    <title>Maka-Villa | Bar, Restaurant & Accommodation | Murang'a</title>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <meta
+        name="description"
+        content="Maka-Villa Bar, Restaurant and Accommodation in Murang'a, Kenya. Enjoy great food, a relaxed atmosphere and comfortable accommodation."
+    >
 
-    html {
-        scroll-behavior: smooth;
-    }
+    <style>
 
-    body {
-        font-family: Arial, sans-serif;
-        background: #111;
-        color: #fff;
-        line-height: 1.6;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header {
-        background: #080808;
-        padding: 20px 8%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #c9a227;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    .logo {
-        color: #d4af37;
-        font-size: 25px;
-        font-weight: bold;
-    }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0d0d0d;
+            color: #fff;
+            line-height: 1.6;
+        }
 
-    nav a {
-        color: white;
-        text-decoration: none;
-        margin-left: 20px;
-        font-weight: bold;
-    }
+        a {
+            text-decoration: none;
+        }
 
-    nav a:hover {
-        color: #d4af37;
-    }
-
-    .hero {
-        min-height: 600px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 40px 20px;
-
-        background:
-            linear-gradient(
-                rgba(0, 0, 0, 0.65),
-                rgba(0, 0, 0, 0.75)
-            ),
-            url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80");
-
-        background-size: cover;
-        background-position: center;
-    }
-
-    .hero-content {
-        max-width: 800px;
-    }
-
-    .hero h1 {
-        font-size: 55px;
-        color: #d4af37;
-        margin-bottom: 20px;
-    }
-
-    .hero p {
-        font-size: 21px;
-        margin-bottom: 30px;
-    }
-
-    .button {
-        display: inline-block;
-        background: #d4af37;
-        color: #000;
-        padding: 14px 25px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-    }
-
-    .button:hover {
-        background: #f0cf62;
-    }
-
-    .section {
-        padding: 70px 8%;
-    }
-
-    .section h2 {
-        text-align: center;
-        color: #d4af37;
-        margin-bottom: 40px;
-        font-size: 35px;
-    }
-
-    .services {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 25px;
-    }
-
-    .service-card {
-        background: #1d1d1d;
-        padding: 30px;
-        text-align: center;
-        border-radius: 10px;
-        border: 1px solid #333;
-        transition: 0.3s;
-    }
-
-    .service-card:hover {
-        transform: translateY(-5px);
-        border-color: #d4af37;
-    }
-
-    .service-card h3 {
-        color: #d4af37;
-        margin-bottom: 15px;
-    }
-
-    .service-icon {
-        font-size: 45px;
-        margin-bottom: 15px;
-    }
-
-    .about {
-        background: #181818;
-        text-align: center;
-    }
-
-    .about p {
-        max-width: 800px;
-        margin: auto;
-        font-size: 18px;
-    }
-
-    .restaurant {
-        background: #101010;
-    }
-
-    .restaurant-list {
-        max-width: 800px;
-        margin: auto;
-    }
-
-    .restaurant-item {
-        background: #1c1c1c;
-        padding: 20px;
-        margin-bottom: 15px;
-        border-left: 4px solid #d4af37;
-    }
-
-    .restaurant-item h3 {
-        color: #d4af37;
-    }
-
-    .booking {
-        background:
-            linear-gradient(
-                rgba(0, 0, 0, 0.85),
-                rgba(0, 0, 0, 0.9)
-            ),
-            url("https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1600&q=80");
-
-        background-size: cover;
-        background-position: center;
-    }
-
-    .booking-box {
-        max-width: 800px;
-        margin: auto;
-        background: #181818;
-        padding: 35px;
-        border-radius: 12px;
-        border: 1px solid #d4af37;
-    }
-
-    .booking-box p {
-        text-align: center;
-        margin-bottom: 25px;
-    }
-
-    .form-group {
-        margin-bottom: 18px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 7px;
-        color: #d4af37;
-        font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        width: 100%;
-        padding: 13px;
-        border: 1px solid #555;
-        border-radius: 6px;
-        background: #0f0f0f;
-        color: white;
-        font-size: 16px;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: #d4af37;
-    }
-
-    .form-group textarea {
-        min-height: 120px;
-        resize: vertical;
-    }
-
-    .submit-button {
-        width: 100%;
-        padding: 15px;
-        background: #d4af37;
-        color: #000;
-        border: none;
-        border-radius: 6px;
-        font-size: 17px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .submit-button:hover {
-        background: #f0cf62;
-    }
-
-    .submit-button:disabled {
-        background: #777;
-        cursor: not-allowed;
-    }
-
-    #bookingStatus {
-        margin-top: 20px;
-        padding: 18px;
-        border-radius: 6px;
-        text-align: center;
-        display: none;
-    }
-
-    .success {
-        display: block !important;
-        background: #143d20;
-        color: #8ff0a4;
-        border: 1px solid #2f8f46;
-    }
-
-    .error {
-        display: block !important;
-        background: #4a1717;
-        color: #ffaaaa;
-        border: 1px solid #9e3333;
-    }
-
-    .booking-reference {
-        font-size: 22px;
-        font-weight: bold;
-        color: #d4af37;
-        margin: 10px 0;
-    }
-
-    .contact {
-        background: #181818;
-    }
-
-    .contact-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 25px;
-    }
-
-    .contact-card {
-        text-align: center;
-        background: #101010;
-        padding: 25px;
-        border-radius: 10px;
-        border: 1px solid #333;
-    }
-
-    .contact-card h3 {
-        color: #d4af37;
-        margin: 10px 0;
-    }
-
-    .contact-card a {
-        color: white;
-        text-decoration: none;
-    }
-
-    .contact-card a:hover {
-        color: #d4af37;
-    }
-
-    .contact-icon {
-        font-size: 35px;
-    }
-
-    footer {
-        background: #050505;
-        text-align: center;
-        padding: 30px;
-        border-top: 1px solid #d4af37;
-    }
-
-    footer h3 {
-        color: #d4af37;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 700px) {
+        /* ================= HEADER ================= */
 
         header {
-            flex-direction: column;
-            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(5, 5, 5, 0.97);
+
+            border-bottom: 1px solid #c9a227;
+
+            padding: 17px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #d4af37;
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         nav {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         nav a {
-            margin: 0 5px;
+            color: #fff;
+            font-weight: bold;
             font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        .nav-button {
+            background: #d4af37;
+            color: #000 !important;
+            padding: 9px 15px;
+            border-radius: 5px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 720px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.55),
+                    rgba(0,0,0,0.82)
+                ),
+                url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-tag {
+            color: #d4af37;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
         }
 
         .hero h1 {
-            font-size: 38px;
+            font-size: 65px;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+        .hero h2 {
+            font-size: 27px;
+            margin-bottom: 20px;
         }
 
         .hero p {
-            font-size: 18px;
+            font-size: 19px;
+            max-width: 700px;
+            margin: auto auto 30px;
+            color: #eee;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            background: #d4af37;
+            color: #000;
+            padding: 14px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #f0cf62;
+            transform: translateY(-2px);
+        }
+
+        .button-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #d4af37;
+        }
+
+        .button-outline:hover {
+            background: #d4af37;
+            color: #000;
+        }
+
+        /* ================= GENERAL ================= */
+
+        .section {
+            padding: 80px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title span {
+            color: #d4af37;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .section-title h2 {
+            color: #d4af37;
+            font-size: 40px;
+            margin-top: 8px;
+        }
+
+        .section-title p {
+            max-width: 700px;
+            margin: 12px auto 0;
+            color: #bbb;
+        }
+
+        /* ================= QUICK FEATURES ================= */
+
+        .quick-features {
+            background: #111;
+            padding: 30px 7%;
+        }
+
+        .quick-grid {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .quick-item {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .quick-item .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .quick-item h3 {
+            color: #d4af37;
+            font-size: 17px;
+        }
+
+        .quick-item p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* ================= SERVICES ================= */
+
+        .services {
+            background: #151515;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .service-card {
+            background: #202020;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            border-color: #d4af37;
+        }
+
+        .service-card .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            color: #d4af37;
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: #ccc;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about {
+            background: #0e0e0e;
+        }
+
+        .about-grid {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image {
+            min-height: 400px;
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.15),
+                    rgba(0,0,0,0.3)
+                ),
+                url("https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .about-text h2 {
+            color: #d4af37;
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #ccc;
+            margin-bottom: 17px;
+        }
+
+        .about-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .about-list li {
+            margin-bottom: 12px;
+            color: #ddd;
+        }
+
+        .about-list span {
+            color: #d4af37;
+            margin-right: 8px;
+        }
+
+        /* ================= MENU ================= */
+
+        .menu {
+            background: #171717;
+        }
+
+        .menu-grid {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .menu-category {
+            background: #202020;
+            padding: 28px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .menu-category h3 {
+            color: #d4af37;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item strong {
+            color: #fff;
+        }
+
+        .menu-item small {
+            display: block;
+            color: #999;
+        }
+
+        .price {
+            color: #d4af37;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .estimate-note {
+            max-width: 800px;
+            margin: 35px auto 0;
+            padding: 15px;
+            background: #2a230d;
+            border: 1px solid #8d7420;
+            border-radius: 8px;
+            text-align: center;
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        /* ================= ACCOMMODATION ================= */
+
+        .rooms {
+            background: #0e0e0e;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .room-card {
+            background: #1d1d1d;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .room-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .room-one {
+            background-image: url("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .room-two {
+            background-image: url("https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .room-three {
+            background-image: url("https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .room-content {
+            padding: 25px;
+        }
+
+        .room-content h3 {
+            color: #d4af37;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .room-content p {
+            color: #bbb;
+            margin-bottom: 15px;
+        }
+
+        .room-price {
+            color: #d4af37;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .room-features {
+            color: #ddd;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        /* ================= GALLERY ================= */
+
+        .gallery {
+            background: #171717;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            height: 240px;
+            border-radius: 9px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            transition: 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-1 {
+            background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .gallery-2 {
+            background-image: url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .gallery-3 {
+            background-image: url("https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .gallery-4 {
+            background-image: url("https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .gallery-5 {
+            background-image: url("https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .gallery-6 {
+            background-image: url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .gallery-7 {
+            background-image: url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .gallery-8 {
+            background-image: url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=85");
+        }
+
+        .photo-note {
+            text-align: center;
+            color: #888;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        /* ================= EVENTS ================= */
+
+        .events {
+            background: #0e0e0e;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .event-card {
+            background: #1d1d1d;
+            padding: 30px;
+            border-radius: 10px;
+            border-top: 3px solid #d4af37;
+        }
+
+        .event-card h3 {
+            color: #d4af37;
+            margin-bottom: 12px;
+        }
+
+        .event-card p {
+            color: #bbb;
+        }
+
+        /* ================= BOOKING ================= */
+
+        .booking {
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.88),
+                    rgba(0,0,0,0.92)
+                ),
+                url("https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
         }
 
         .booking-box {
-            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            background: #181818;
+            padding: 35px;
+            border-radius: 12px;
+            border: 1px solid #d4af37;
         }
-    }
-</style>
-```
 
+        .booking-box > p {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #d4af37;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            background: #0f0f0f;
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background: #d4af37;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background: #f0cf62;
+        }
+
+        .submit-button:disabled {
+            background: #777;
+            cursor: not-allowed;
+        }
+
+        #bookingStatus {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 6px;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            display: block !important;
+            background: #143d20;
+            color: #8ff0a4;
+            border: 1px solid #2f8f46;
+        }
+
+        .error {
+            display: block !important;
+            background: #4a1717;
+            color: #ffaaaa;
+            border: 1px solid #9e3333;
+        }
+
+        .booking-reference {
+            font-size: 23px;
+            font-weight: bold;
+            color: #d4af37;
+            margin: 10px 0;
+        }
+
+        /* ================= CONTACT ================= */
+
+        .contact {
+            background: #181818;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .contact-card {
+            text-align: center;
+            background: #101010;
+            padding: 28px 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .contact-card h3 {
+            color: #d4af37;
+            margin: 10px 0;
+        }
+
+        .contact-card p,
+        .contact-card a {
+            color: #ccc;
+        }
+
+        .contact-card a:hover {
+            color: #d4af37;
+        }
+
+        .contact-icon {
+            font-size: 36px;
+        }
+
+        /* ================= MAP ================= */
+
+        .map-section {
+            background: #0d0d0d;
+            text-align: center;
+        }
+
+        .map-box {
+            max-width: 1000px;
+            margin: auto;
+            height: 350px;
+            border: 1px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .map-box iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            padding: 70px 7%;
+            text-align: center;
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.7),
+                    rgba(0,0,0,0.7)
+                ),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cta h2 {
+            color: #d4af37;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #eee;
+            margin-bottom: 25px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #050505;
+            text-align: center;
+            padding: 35px 20px;
+            border-top: 1px solid #d4af37;
+        }
+
+        footer h3 {
+            color: #d4af37;
+            margin-bottom: 10px;
+            font-size: 25px;
+        }
+
+        footer p {
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .footer-links {
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            margin: 0 8px;
+        }
+
+        .footer-links a:hover {
+            color: #d4af37;
+        }
+
+        /* ================= WHATSAPP FLOAT ================= */
+
+        .whatsapp {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 999;
+
+            width: 58px;
+            height: 58px;
+
+            border-radius: 50%;
+
+            background: #25D366;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 28px;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .quick-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .service-grid,
+            .room-grid,
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .hero {
+                min-height: 650px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero h2 {
+                font-size: 22px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .section {
+                padding: 60px 5%;
+            }
+
+            .section-title h2 {
+                font-size: 31px;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item {
+                height: 260px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-box {
+                padding: 20px;
+            }
+
+            .cta h2 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-```
+
+<!-- ================================================= -->
 <!-- HEADER -->
+<!-- ================================================= -->
 
 <header>
 
@@ -382,61 +934,148 @@
     </div>
 
     <nav>
+
         <a href="#home">Home</a>
         <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#booking">Booking</a>
-        <a href="#contact">Contact</a>
+        <a href="#menu">Menu</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#booking" class="nav-button">Book Now</a>
+
     </nav>
 
 </header>
 
 
+<!-- ================================================= -->
 <!-- HERO -->
+<!-- ================================================= -->
 
 <section class="hero" id="home">
 
     <div class="hero-content">
 
+        <div class="hero-tag">
+            Welcome to Maka-Villa
+        </div>
+
         <h1>Maka-Villa</h1>
 
-        <p>
+        <h2>
             Bar • Restaurant • Accommodation
-        </p>
+        </h2>
 
         <p>
-            A comfortable place to relax, enjoy great food,
-            drinks and quality hospitality in Murang'a.
+            A relaxed hospitality destination in Murang'a,
+            offering good food, a comfortable atmosphere,
+            memorable gatherings and accommodation.
         </p>
 
-        <a href="#booking" class="button">
-            Make a Reservation
-        </a>
+        <div class="hero-buttons">
+
+            <a href="#booking" class="button">
+                📅 Make a Reservation
+            </a>
+
+            <a href="#menu" class="button button-outline">
+                🍽️ Explore Our Menu
+            </a>
+
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- ================================================= -->
+<!-- QUICK FEATURES -->
+<!-- ================================================= -->
+
+<section class="quick-features">
+
+    <div class="quick-grid">
+
+        <div class="quick-item">
+
+            <div class="icon">🍽️</div>
+
+            <h3>Restaurant</h3>
+
+            <p>Fresh meals & dining</p>
+
+        </div>
+
+
+        <div class="quick-item">
+
+            <div class="icon">🍹</div>
+
+            <h3>Bar & Lounge</h3>
+
+            <p>Relaxed atmosphere</p>
+
+        </div>
+
+
+        <div class="quick-item">
+
+            <div class="icon">🛏️</div>
+
+            <h3>Accommodation</h3>
+
+            <p>Comfortable rooms</p>
+
+        </div>
+
+
+        <div class="quick-item">
+
+            <div class="icon">🎉</div>
+
+            <h3>Events</h3>
+
+            <p>Groups & occasions</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
 <!-- SERVICES -->
+<!-- ================================================= -->
 
-<section class="section" id="services">
+<section class="section services" id="services">
 
-    <h2>Our Services</h2>
+    <div class="section-title">
 
-    <div class="services">
+        <span>What We Offer</span>
+
+        <h2>Our Services</h2>
+
+        <p>
+            Everything you need for a comfortable dining,
+            relaxation and hospitality experience.
+        </p>
+
+    </div>
+
+
+    <div class="service-grid">
 
         <div class="service-card">
 
-            <div class="service-icon">
-                🍽️
-            </div>
+            <div class="icon">🍽️</div>
 
             <h3>Restaurant</h3>
 
             <p>
-                Enjoy delicious meals prepared for individuals,
-                families and groups.
+                Enjoy breakfast, lunch, dinner, grilled
+                meals and local favourites in a relaxed
+                setting.
             </p>
 
         </div>
@@ -444,15 +1083,13 @@
 
         <div class="service-card">
 
-            <div class="service-icon">
-                🍹
-            </div>
+            <div class="icon">🍹</div>
 
             <h3>Bar & Lounge</h3>
 
             <p>
-                Relax and enjoy a comfortable atmosphere
-                with friends and good company.
+                A social space for relaxing, meeting friends
+                and enjoying your time at Maka-Villa.
             </p>
 
         </div>
@@ -460,15 +1097,13 @@
 
         <div class="service-card">
 
-            <div class="service-icon">
-                🛏️
-            </div>
+            <div class="icon">🛏️</div>
 
             <h3>Accommodation</h3>
 
             <p>
-                Comfortable accommodation for guests
-                looking for a convenient place to stay.
+                Comfortable rooms for guests looking for
+                convenient accommodation in Murang'a.
             </p>
 
         </div>
@@ -478,82 +1113,597 @@
 </section>
 
 
+<!-- ================================================= -->
 <!-- ABOUT -->
+<!-- ================================================= -->
 
 <section class="section about" id="about">
 
-    <h2>About Maka-Villa</h2>
+    <div class="about-grid">
 
-    <p>
-        Maka-Villa is a hospitality destination in Murang'a,
-        Kenya, offering restaurant services, a bar and lounge,
-        and accommodation. Our goal is to provide guests with
-        a comfortable place to eat, relax, meet and stay.
-    </p>
+        <div class="about-image"></div>
+
+
+        <div class="about-text">
+
+            <h2>Welcome to Maka-Villa</h2>
+
+            <p>
+                Maka-Villa is a hospitality destination in
+                Murang'a, Kenya, bringing together dining,
+                relaxation and accommodation in one place.
+            </p>
+
+            <p>
+                Whether you are stopping by for a meal,
+                meeting friends, planning a group gathering
+                or looking for somewhere to stay, Maka-Villa
+                provides a convenient place to enjoy your time.
+            </p>
+
+            <ul class="about-list">
+
+                <li>
+                    <span>✓</span>
+                    Restaurant and dining
+                </li>
+
+                <li>
+                    <span>✓</span>
+                    Bar and lounge
+                </li>
+
+                <li>
+                    <span>✓</span>
+                    Nyama Choma and grilled meals
+                </li>
+
+                <li>
+                    <span>✓</span>
+                    Accommodation
+                </li>
+
+                <li>
+                    <span>✓</span>
+                    Group and event reservations
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- RESTAURANT -->
+<!-- ================================================= -->
+<!-- MENU -->
+<!-- ================================================= -->
 
-<section class="section restaurant">
+<section class="section menu" id="menu">
 
-    <h2>Restaurant</h2>
+    <div class="section-title">
 
-    <div class="restaurant-list">
+        <span>Food & Dining</span>
 
-        <div class="restaurant-item">
+        <h2>Our Menu</h2>
+
+        <p>
+            A selection of popular dishes and refreshments.
+        </p>
+
+    </div>
+
+
+    <div class="menu-grid">
+
+
+        <!-- BREAKFAST -->
+
+        <div class="menu-category">
 
             <h3>🍳 Breakfast</h3>
 
+            <div class="menu-item">
+
+                <div>
+                    <strong>Tea & Mandazi</strong>
+                    <small>Light breakfast</small>
+                </div>
+
+                <div class="price">
+                    KSh 180
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Tea & Chapati</strong>
+                    <small>Kenyan-style breakfast</small>
+                </div>
+
+                <div class="price">
+                    KSh 250
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Egg Breakfast</strong>
+                    <small>Eggs with breakfast sides</small>
+                </div>
+
+                <div class="price">
+                    KSh 350
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Full Breakfast</strong>
+                    <small>Hearty breakfast plate</small>
+                </div>
+
+                <div class="price">
+                    KSh 450
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAIN MEALS -->
+
+        <div class="menu-category">
+
+            <h3>🍛 Main Meals</h3>
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Beef Stew</strong>
+                    <small>Served with accompaniment</small>
+                </div>
+
+                <div class="price">
+                    KSh 550
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Chicken</strong>
+                    <small>Chicken with accompaniment</small>
+                </div>
+
+                <div class="price">
+                    KSh 650
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Fish</strong>
+                    <small>Fish with accompaniment</small>
+                </div>
+
+                <div class="price">
+                    KSh 700
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Vegetarian Meal</strong>
+                    <small>Fresh vegetable selection</small>
+                </div>
+
+                <div class="price">
+                    KSh 450
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GRILL -->
+
+        <div class="menu-category">
+
+            <h3>🔥 Grill & Nyama Choma</h3>
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Nyama Choma</strong>
+                    <small>Grilled meat</small>
+                </div>
+
+                <div class="price">
+                    KSh 800
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Nyama Choma — Large</strong>
+                    <small>For sharing</small>
+                </div>
+
+                <div class="price">
+                    KSh 1,500
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Grilled Chicken</strong>
+                    <small>Grilled chicken portion</small>
+                </div>
+
+                <div class="price">
+                    KSh 750
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Chips</strong>
+                    <small>Freshly prepared</small>
+                </div>
+
+                <div class="price">
+                    KSh 250
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DRINKS -->
+
+        <div class="menu-category">
+
+            <h3>🥤 Drinks & Refreshments</h3>
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Soft Drinks</strong>
+                    <small>Assorted choices</small>
+                </div>
+
+                <div class="price">
+                    KSh 120
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Fresh Juice</strong>
+                    <small>Freshly prepared</small>
+                </div>
+
+                <div class="price">
+                    KSh 250
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Tea</strong>
+                    <small>Hot tea</small>
+                </div>
+
+                <div class="price">
+                    KSh 120
+                </div>
+
+            </div>
+
+
+            <div class="menu-item">
+
+                <div>
+                    <strong>Coffee</strong>
+                    <small>Hot coffee</small>
+                </div>
+
+                <div class="price">
+                    KSh 180
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="estimate-note">
+
+        ⚠️ <strong>Price notice:</strong>
+        The prices displayed above are estimated/sample prices
+        for website presentation and should be confirmed with
+        Maka-Villa before being treated as the official menu.
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ACCOMMODATION -->
+<!-- ================================================= -->
+
+<section class="section rooms" id="rooms">
+
+    <div class="section-title">
+
+        <span>Stay With Us</span>
+
+        <h2>Accommodation</h2>
+
+        <p>
+            Comfortable accommodation for guests visiting
+            Murang'a and nearby areas.
+        </p>
+
+    </div>
+
+
+    <div class="room-grid">
+
+
+        <div class="room-card">
+
+            <div class="room-image room-one"></div>
+
+            <div class="room-content">
+
+                <h3>Standard Room</h3>
+
+                <p>
+                    A comfortable room suitable for individual
+                    guests or short stays.
+                </p>
+
+                <div class="room-price">
+                    From KSh 2,500 / night
+                </div>
+
+                <div class="room-features">
+
+                    ✓ Comfortable bed<br>
+                    ✓ Private space<br>
+                    ✓ Guest amenities<br>
+                    ✓ Convenient location
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="room-card">
+
+            <div class="room-image room-two"></div>
+
+            <div class="room-content">
+
+                <h3>Deluxe Room</h3>
+
+                <p>
+                    Extra comfort for guests looking for a
+                    more spacious stay.
+                </p>
+
+                <div class="room-price">
+                    From KSh 3,500 / night
+                </div>
+
+                <div class="room-features">
+
+                    ✓ Spacious room<br>
+                    ✓ Comfortable bed<br>
+                    ✓ Private space<br>
+                    ✓ Guest amenities
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="room-card">
+
+            <div class="room-image room-three"></div>
+
+            <div class="room-content">
+
+                <h3>Family / Group Stay</h3>
+
+                <p>
+                    Suitable for families and guests travelling
+                    together.
+                </p>
+
+                <div class="room-price">
+                    Contact us for pricing
+                </div>
+
+                <div class="room-features">
+
+                    ✓ Group-friendly<br>
+                    ✓ Comfortable space<br>
+                    ✓ Flexible arrangements<br>
+                    ✓ Reservation support
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="estimate-note">
+
+        ⚠️ Accommodation images and prices above are
+        placeholders/estimates for website presentation.
+        Replace them with Maka-Villa's actual room photos
+        and confirmed prices before advertising them as official.
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- GALLERY -->
+<!-- ================================================= -->
+
+<section class="section gallery" id="gallery">
+
+    <div class="section-title">
+
+        <span>Explore Maka-Villa</span>
+
+        <h2>Gallery</h2>
+
+        <p>
+            A visual preview of the dining, hospitality and
+            accommodation experience.
+        </p>
+
+    </div>
+
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item gallery-1"></div>
+
+        <div class="gallery-item gallery-2"></div>
+
+        <div class="gallery-item gallery-3"></div>
+
+        <div class="gallery-item gallery-4"></div>
+
+        <div class="gallery-item gallery-5"></div>
+
+        <div class="gallery-item gallery-6"></div>
+
+        <div class="gallery-item gallery-7"></div>
+
+        <div class="gallery-item gallery-8"></div>
+
+    </div>
+
+
+    <div class="photo-note">
+
+        Gallery images are illustrative hospitality photos.
+        Replace them with official Maka-Villa photographs
+        when available.
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- EVENTS -->
+<!-- ================================================= -->
+
+<section class="section events">
+
+    <div class="section-title">
+
+        <span>Gather • Celebrate • Enjoy</span>
+
+        <h2>Groups & Events</h2>
+
+        <p>
+            Planning a special gathering? Talk to Maka-Villa
+            about your reservation requirements.
+        </p>
+
+    </div>
+
+
+    <div class="event-grid">
+
+        <div class="event-card">
+
+            <h3>🎉 Private Events</h3>
+
             <p>
-                Start your day with a satisfying breakfast.
+                Suitable for birthdays, celebrations and
+                private gatherings.
             </p>
 
         </div>
 
 
-        <div class="restaurant-item">
-
-            <h3>🍛 Lunch</h3>
-
-            <p>
-                Enjoy a freshly prepared lunch in a relaxed
-                environment.
-            </p>
-
-        </div>
-
-
-        <div class="restaurant-item">
-
-            <h3>🍽️ Dinner</h3>
-
-            <p>
-                Enjoy a delicious evening meal at Maka-Villa.
-            </p>
-
-        </div>
-
-
-        <div class="restaurant-item">
-
-            <h3>🔥 Nyama Choma</h3>
-
-            <p>
-                Enjoy nyama choma and good company.
-            </p>
-
-        </div>
-
-
-        <div class="restaurant-item">
+        <div class="event-card">
 
             <h3>👥 Group Dining</h3>
 
             <p>
-                We welcome group reservations and special
-                occasions.
+                Reserve space for friends, families,
+                colleagues and travelling groups.
+            </p>
+
+        </div>
+
+
+        <div class="event-card">
+
+            <h3>🏢 Corporate Meetings</h3>
+
+            <p>
+                Contact us to discuss arrangements for
+                meetings and group functions.
             </p>
 
         </div>
@@ -563,21 +1713,36 @@
 </section>
 
 
+<!-- ================================================= -->
 <!-- BOOKING -->
+<!-- ================================================= -->
 
 <section class="section booking" id="booking">
 
-    <h2>Make a Reservation</h2>
+    <div class="section-title">
+
+        <span>Reservations</span>
+
+        <h2>Make a Reservation</h2>
+
+        <p>
+            Submit your reservation request and Maka-Villa
+            will review it and contact you.
+        </p>
+
+    </div>
+
 
     <div class="booking-box">
 
         <p>
-            Fill in your details below and Maka-Villa
-            will receive your reservation request.
+            Please provide accurate contact information so
+            we can reach you about your reservation.
         </p>
 
 
         <form id="bookingForm">
+
 
             <div class="form-group">
 
@@ -716,7 +1881,7 @@
 
                 <textarea
                     id="message"
-                    placeholder="Any additional information..."
+                    placeholder="Tell us anything else we should know..."
                 ></textarea>
 
             </div>
@@ -733,6 +1898,7 @@
 
             <div id="bookingStatus"></div>
 
+
         </form>
 
     </div>
@@ -740,13 +1906,28 @@
 </section>
 
 
+<!-- ================================================= -->
 <!-- CONTACT -->
+<!-- ================================================= -->
 
 <section class="section contact" id="contact">
 
-    <h2>Contact Maka-Villa</h2>
+    <div class="section-title">
+
+        <span>Get In Touch</span>
+
+        <h2>Contact Maka-Villa</h2>
+
+        <p>
+            Have a question or want to make a reservation?
+            Contact us directly.
+        </p>
+
+    </div>
+
 
     <div class="contact-grid">
+
 
         <div class="contact-card">
 
@@ -774,13 +1955,15 @@
             <h3>WhatsApp</h3>
 
             <p>
+
                 <a
                     href="https://wa.me/254742020633"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Chat with us
+                    Chat With Us
                 </a>
+
             </p>
 
         </div>
@@ -795,9 +1978,11 @@
             <h3>Email</h3>
 
             <p>
+
                 <a href="mailto:robii254.ke@gmail.com">
                     robii254.ke@gmail.com
                 </a>
+
             </p>
 
         </div>
@@ -817,17 +2002,73 @@
 
         </div>
 
+
     </div>
 
 </section>
 
 
+<!-- ================================================= -->
+<!-- MAP -->
+<!-- ================================================= -->
+
+<section class="section map-section">
+
+    <div class="section-title">
+
+        <span>Find Us</span>
+
+        <h2>Our Location</h2>
+
+        <p>
+            Maka-Villa is located along C71 in Murang'a,
+            Kenya.
+        </p>
+
+    </div>
+
+
+    <div class="map-box">
+
+        <iframe
+            src="https://www.google.com/maps?q=Maka-Villa%20Bar%20and%20Restaurant%20Muranga%20Kenya&output=embed"
+            loading="lazy"
+            allowfullscreen
+        ></iframe>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- CALL TO ACTION -->
+<!-- ================================================= -->
+
+<section class="cta">
+
+    <h2>Planning Your Visit?</h2>
+
+    <p>
+        Reserve your table, accommodation or group visit
+        with Maka-Villa.
+    </p>
+
+    <a href="#booking" class="button">
+        📅 Book Your Reservation
+    </a>
+
+</section>
+
+
+<!-- ================================================= -->
 <!-- FOOTER -->
+<!-- ================================================= -->
 
 <footer>
 
     <h3>
-        MAKA-VILLA
+        🍽️ MAKA-VILLA
     </h3>
 
     <p>
@@ -836,6 +2077,30 @@
 
     <p>
         C71, Murang'a, Kenya
+    </p>
+
+
+    <div class="footer-links">
+
+        <a href="#home">Home</a>
+
+        <a href="#menu">Menu</a>
+
+        <a href="#rooms">Rooms</a>
+
+        <a href="#booking">Booking</a>
+
+        <a href="#contact">Contact</a>
+
+    </div>
+
+
+    <p>
+        📞 0742020633
+    </p>
+
+    <p>
+        📧 robii254.ke@gmail.com
     </p>
 
     <br>
@@ -847,9 +2112,28 @@
 </footer>
 
 
+<!-- FLOATING WHATSAPP -->
+
+<a
+    class="whatsapp"
+    href="https://wa.me/254742020633"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with Maka-Villa on WhatsApp"
+>
+    💬
+</a>
+
+
+<!-- ================================================= -->
 <!-- JAVASCRIPT -->
+<!-- ================================================= -->
 
 <script>
+
+    /*
+     * LIVE MAKA-VILLA BACKEND
+     */
 
     const API_URL =
         "https://makavilla-backend-2026.onrender.com";
@@ -858,31 +2142,43 @@
     const bookingForm =
         document.getElementById("bookingForm");
 
+
     const submitButton =
         document.getElementById("submitBookingButton");
+
 
     const bookingStatus =
         document.getElementById("bookingStatus");
 
 
     /*
-     * Prevent customers from selecting a date in the past.
+     * DATE
+     *
+     * Prevent customers from selecting
+     * a date in the past.
      */
 
     const dateInput =
         document.getElementById("date");
 
+
     const today =
         new Date();
+
 
     const year =
         today.getFullYear();
 
+
     const month =
-        String(today.getMonth() + 1).padStart(2, "0");
+        String(today.getMonth() + 1)
+            .padStart(2, "0");
+
 
     const day =
-        String(today.getDate()).padStart(2, "0");
+        String(today.getDate())
+            .padStart(2, "0");
+
 
     dateInput.min =
         `${year}-${month}-${day}`;
@@ -952,6 +2248,9 @@
                 bookingStatus.className =
                     "error";
 
+                bookingStatus.style.display =
+                    "block";
+
                 bookingStatus.textContent =
                     "Please fill in all required fields.";
 
@@ -959,8 +2258,13 @@
             }
 
 
+            /*
+             * Disable button while sending.
+             */
+
             submitButton.disabled =
                 true;
+
 
             submitButton.textContent =
                 "⏳ Sending Reservation...";
@@ -977,6 +2281,7 @@
 
             try {
 
+
                 const response =
                     await fetch(
                         API_URL +
@@ -986,8 +2291,10 @@
                             method: "POST",
 
                             headers: {
+
                                 "Content-Type":
                                     "application/json"
+
                             },
 
                             body:
@@ -1001,7 +2308,8 @@
 
                                     type: type,
 
-                                    guests: Number(guests),
+                                    guests:
+                                        Number(guests),
 
                                     date: date,
 
@@ -1010,6 +2318,7 @@
                                     message: message
 
                                 })
+
                         }
                     );
 
@@ -1029,8 +2338,8 @@
 
 
                 /*
-                 * Try to get the booking reference
-                 * returned by the backend.
+                 * Read booking reference if
+                 * the backend returns one.
                  */
 
                 const reference =
@@ -1049,37 +2358,68 @@
                 if (reference) {
 
                     bookingStatus.innerHTML =
+
                         "✅ <strong>Reservation Received!</strong><br><br>" +
+
                         "Your booking reference is:" +
+
                         "<div class='booking-reference'>" +
+
                         reference +
+
                         "</div>" +
-                        "Please keep this reference for future communication.<br><br>" +
+
+                        "Please keep this reference for future communication." +
+
+                        "<br><br>" +
+
                         "Maka-Villa will review your reservation and contact you.";
 
                 } else {
 
                     bookingStatus.innerHTML =
+
                         "✅ <strong>Reservation Received!</strong><br><br>" +
-                        "Your reservation has been successfully submitted.<br><br>" +
+
+                        "Your reservation has been successfully submitted." +
+
+                        "<br><br>" +
+
                         "Maka-Villa will review your booking and contact you.";
 
                 }
 
 
+                /*
+                 * Clear form.
+                 */
+
                 bookingForm.reset();
+
+
+                /*
+                 * Restore date restriction.
+                 */
 
                 dateInput.min =
                     `${year}-${month}-${day}`;
 
 
+                /*
+                 * Move customer to confirmation.
+                 */
+
                 bookingStatus.scrollIntoView({
+
                     behavior: "smooth",
+
                     block: "center"
+
                 });
 
 
             } catch (error) {
+
 
                 console.error(
                     "Booking error:",
@@ -1091,14 +2431,26 @@
                     "error";
 
 
+                bookingStatus.style.display =
+                    "block";
+
+
                 bookingStatus.textContent =
-                    "❌ We could not submit your reservation. Please try again or contact Maka-Villa directly on 0742020633.";
+
+                    "❌ We could not submit your reservation. " +
+
+                    "Please try again or contact Maka-Villa directly on 0742020633.";
 
             }
 
 
+            /*
+             * Enable button again.
+             */
+
             submitButton.disabled =
                 false;
+
 
             submitButton.textContent =
                 "📩 Submit Reservation";
@@ -1107,7 +2459,7 @@
     );
 
 </script>
-```
+
 
 </body>
 
