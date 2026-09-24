@@ -1,1142 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Maka-Villa Bar & Restaurant | Restaurant, Bar & Accommodation</title>
-
-    <meta name="description"
-          content="Maka-Villa Bar & Restaurant in Murang'a. Enjoy delicious meals, drinks, reservations and accommodation.">
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f8f5ef;
-            color: #222;
-            line-height: 1.6;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button,
-        input,
-        select,
-        textarea {
-            font: inherit;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
-        /* ================= HEADER ================= */
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: #111;
-            color: white;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.25);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #d4af37;
-            white-space: nowrap;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 22px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #d4af37;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: transparent;
-            color: white;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-        }
-
-        /* ================= HERO ================= */
-
-        .hero {
-            min-height: 78vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            padding: 60px 20px;
-
-            background:
-                linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1800&q=80")
-                center/cover;
-        }
-
-        .hero-content {
-            max-width: 850px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.4rem, 6vw, 4.8rem);
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            font-size: 1.15rem;
-            max-width: 700px;
-            margin: 0 auto 25px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            border: none;
-            cursor: pointer;
-            padding: 13px 22px;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: 0.2s;
-        }
-
-        .btn-gold {
-            background: #d4af37;
-            color: #111;
-        }
-
-        .btn-gold:hover {
-            background: #f0ce58;
-            transform: translateY(-2px);
-        }
-
-        .btn-dark {
-            background: #111;
-            color: white;
-        }
-
-        .btn-dark:hover {
-            background: #333;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #d4af37;
-            color: #d4af37;
-        }
-
-        .btn-outline:hover {
-            background: #d4af37;
-            color: #111;
-        }
-
-        /* ================= GENERAL ================= */
-
-        section {
-            padding: 75px 20px;
-        }
-
-        .container {
-            max-width: 1150px;
-            margin: auto;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .section-title h2 {
-            font-size: 2.3rem;
-            margin-bottom: 10px;
-            color: #111;
-        }
-
-        .section-title p {
-            color: #666;
-        }
-
-        /* ================= HELP CARDS ================= */
-
-        .help-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .help-card {
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: 0.2s;
-        }
-
-        .help-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .help-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .help-card h3 {
-            margin-bottom: 10px;
-        }
-
-        .help-card p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        /* ================= ABOUT ================= */
-
-        .about {
-            background: #111;
-            color: white;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 45px;
-            align-items: center;
-        }
-
-        .about img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 15px;
-        }
-
-        .about h2 {
-            font-size: 2.3rem;
-            color: #d4af37;
-            margin-bottom: 18px;
-        }
-
-        .about p {
-            margin-bottom: 15px;
-            color: #ddd;
-        }
-
-        /* ================= MENU ================= */
-
-        .menu-section {
-            background: #fff;
-        }
-
-        .menu-note {
-            text-align: center;
-            color: #777;
-            margin-top: -25px;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-        }
-
-        .category-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 35px;
-        }
-
-        .category-btn {
-            border: 1px solid #d4af37;
-            background: white;
-            color: #111;
-            padding: 9px 16px;
-            border-radius: 25px;
-            cursor: pointer;
-        }
-
-        .category-btn.active,
-        .category-btn:hover {
-            background: #d4af37;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-        }
-
-        .menu-card {
-            background: #f8f5ef;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #eee;
-        }
-
-        .menu-card h3 {
-            margin-bottom: 5px;
-        }
-
-        .menu-card p {
-            color: #777;
-            font-size: 0.9rem;
-            min-height: 45px;
-        }
-
-        .menu-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 15px;
-            gap: 10px;
-        }
-
-        .price {
-            font-weight: 800;
-            color: #a17c00;
-        }
-
-        .add-btn {
-            background: #111;
-            color: white;
-            border: none;
-            padding: 8px 13px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .add-btn:hover {
-            background: #d4af37;
-            color: #111;
-        }
-
-        /* ================= CART ================= */
-
-        .cart {
-            margin-top: 40px;
-            background: #111;
-            color: white;
-            border-radius: 14px;
-            padding: 25px;
-        }
-
-        .cart h3 {
-            color: #d4af37;
-            margin-bottom: 15px;
-        }
-
-        #cartItems {
-            margin-bottom: 15px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            border-bottom: 1px solid #333;
-            padding: 10px 0;
-        }
-
-        .cart-item button {
-            background: #d4af37;
-            border: none;
-            padding: 3px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .cart-total {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-
-        .cart-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        /* ================= SERVICES ================= */
-
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .service-card {
-            min-height: 250px;
-            padding: 30px;
-            border-radius: 15px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            background-size: cover;
-            background-position: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .service-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.85));
-        }
-
-        .service-card > * {
-            position: relative;
-        }
-
-        .restaurant-service {
-            background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80");
-        }
-
-        .bar-service {
-            background-image: url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80");
-        }
-
-        .accommodation-service {
-            background-image: url("https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80");
-        }
-
-        /* ================= ROOMS ================= */
-
-        .rooms-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .room-card {
-            background: white;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .room-card img {
-            height: 210px;
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .room-content {
-            padding: 22px;
-        }
-
-        .room-content h3 {
-            margin-bottom: 8px;
-        }
-
-        .room-content p {
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .room-price {
-            color: #a17c00;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .estimate {
-            font-size: 0.8rem;
-            color: #888;
-            margin-bottom: 15px;
-        }
-
-        /* ================= GALLERY ================= */
-
-        .gallery {
-            background: #111;
-        }
-
-        .gallery .section-title h2 {
-            color: white;
-        }
-
-        .gallery .section-title p {
-            color: #ccc;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        .gallery-grid img {
-            height: 220px;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .gallery-grid img:hover {
-            transform: scale(1.02);
-        }
-
-        /* ================= FORMS ================= */
-
-        .booking-area {
-            background: #f1ede5;
-        }
-
-        .forms-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .form-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-        }
-
-        .form-card h3 {
-            margin-bottom: 20px;
-            color: #111;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 11px 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            outline: none;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: #d4af37;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* ================= STATUS ================= */
-
-        .status-section {
-            background: white;
-        }
-
-        .status-box {
-            max-width: 650px;
-            margin: auto;
-            background: #f8f5ef;
-            padding: 30px;
-            border-radius: 15px;
-        }
-
-        .status-search {
-            display: flex;
-            gap: 10px;
-        }
-
-        .status-search input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-        }
-
-        .status-result {
-            margin-top: 20px;
-        }
-
-        .status-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #ddd;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 13px;
-            border-radius: 20px;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-
-        .status-pending {
-            background: #fff1c7;
-            color: #775600;
-        }
-
-        .status-confirmed {
-            background: #d9f5df;
-            color: #146b29;
-        }
-
-        .status-cancelled {
-            background: #ffe0e0;
-            color: #a00000;
-        }
-
-        /* ================= CONTACT ================= */
-
-        .contact {
-            background: #111;
-            color: white;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .contact-card {
-            text-align: center;
-            background: #1c1c1c;
-            padding: 25px;
-            border-radius: 12px;
-        }
-
-        .contact-card .icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .contact-card h3 {
-            color: #d4af37;
-            margin-bottom: 7px;
-        }
-
-        .contact-card p,
-        .contact-card a {
-            color: #ddd;
-        }
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            background: #080808;
-            color: #aaa;
-            text-align: center;
-            padding: 25px 20px;
-        }
-
-        footer strong {
-            color: #d4af37;
-        }
-
-        /* ================= FLOATING WHATSAPP ================= */
-
-        .floating-whatsapp {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            background: #25D366;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            z-index: 2000;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
-        }
-
-        /* ================= MODALS ================= */
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.75);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 3000;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 15px;
-            padding: 30px;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            border: none;
-            background: transparent;
-            font-size: 1.8rem;
-            cursor: pointer;
-        }
-
-        .success-icon {
-            font-size: 3.5rem;
-            text-align: center;
-        }
-
-        .reference-box {
-            background: #111;
-            color: #d4af37;
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-size: 1.25rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .summary {
-            background: #f8f5ef;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-
-        .summary p {
-            margin: 5px 0;
-        }
-
-        /* ================= TOAST ================= */
-
-        #toast {
-            position: fixed;
-            left: 50%;
-            bottom: 25px;
-            transform: translateX(-50%);
-            background: #111;
-            color: white;
-            padding: 13px 20px;
-            border-radius: 8px;
-            z-index: 5000;
-            display: none;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-
-        /* ================= RESPONSIVE ================= */
-
-        @media (max-width: 900px) {
-            .help-grid,
-            .service-grid,
-            .rooms-grid,
-            .menu-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .about-grid,
-            .forms-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 64px;
-                background: #111;
-                flex-direction: column;
-                padding: 20px;
-            }
-
-            .nav-links.show {
-                display: flex;
-            }
-
-            .help-grid,
-            .service-grid,
-            .rooms-grid,
-            .menu-grid,
-            .gallery-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .status-search {
-                flex-direction: column;
-            }
-
-            .about img {
-                height: 280px;
-            }
-
-            .hero {
-                min-height: 70vh;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Maka-Villa | Bar, Restaurant & Accommodation</title>
+  <meta name="description" content="Maka-Villa Bar, Restaurant and Accommodation in Murang'a, Kenya. Enjoy delicious meals, drinks, events and comfortable accommodation.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f4ee;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      display: block;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #171717;
+      color: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      color: #d4af37;
+      font-size: 1.35rem;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: white;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .nav-links a:hover {
+      color: #d4af37;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      min-height: 82vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 60px 20px;
+      background:
+        linear-gradient(rgba(0,0,0,.58), rgba(0,0,0,.62)),
+        url("https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1800&q=80")
+        center/cover;
+    }
+
+    .hero-content {
+      max-width: 850px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 6vw, 4.5rem);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: #d4af37;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .hero-buttons {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      padding: 13px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      display: inline-block;
+      transition: .2s;
+    }
+
+    .btn-gold {
+      background: #d4af37;
+      color: #111;
+    }
+
+    .btn-dark {
+      background: #222;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: .92;
+    }
+
+    /* ================= GENERAL ================= */
+
+    section {
+      padding: 75px 20px;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #666;
+    }
+
+    /* ================= QUICK CARDS ================= */
+
+    .quick-section {
+      margin-top: -45px;
+      position: relative;
+      z-index: 5;
+      padding-top: 0;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .quick-card {
+      position: relative;
+      min-height: 220px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #222;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0,0,0,.18);
+      transition: transform .25s;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .quick-card video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .62;
+      pointer-events: none;
+    }
+
+    .quick-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(transparent, rgba(0,0,0,.85));
+    }
+
+    .quick-overlay h3 {
+      color: #d4af37;
+      font-size: 1.5rem;
+    }
+
+    .quick-overlay p {
+      font-size: .95rem;
+    }
+
+    .sound-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0,0,0,.7);
+      color: white;
+      cursor: pointer;
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .about-image {
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 350px;
+      background: url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1000&q=80")
+      center/cover;
+    }
+
+    .about-text h2 {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+    }
+
+    .about-text p {
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    /* ================= SERVICES ================= */
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .service-card {
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
+
+    .service-card h3 {
+      color: #a47d10;
+      margin-bottom: 10px;
+    }
+
+    /* ================= MENU ================= */
+
+    .menu-section {
+      background: #eee9df;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .menu-item {
+      background: white;
+      border-radius: 13px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+
+    .menu-info {
+      padding: 18px;
+    }
+
+    .menu-info h3 {
+      margin-bottom: 5px;
+    }
+
+    .price {
+      color: #a47d10;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    /* ================= ACCOMMODATION ================= */
+
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .room {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,.1);
+    }
+
+    .room img {
+      height: 210px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .room-content {
+      padding: 20px;
+    }
+
+    .room-content h3 {
+      color: #a47d10;
+      margin-bottom: 8px;
+    }
+
+    /* ================= RESERVATION ================= */
+
+    .reservation {
+      background:
+        linear-gradient(rgba(20,20,20,.93), rgba(20,20,20,.93)),
+        url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80")
+        center/cover;
+      color: white;
+    }
+
+    .reservation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 35px;
+    }
+
+    .booking-box {
+      background: white;
+      color: #222;
+      padding: 30px;
+      border-radius: 15px;
+    }
+
+    .booking-box h3 {
+      margin-bottom: 8px;
+      color: #a47d10;
+    }
+
+    .booking-box p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #d4af37;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      padding: 13px;
+      background: #d4af37;
+      color: #111;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 7px;
+      display: none;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .status.success {
+      background: #dff5e4;
+      color: #17652b;
+    }
+
+    .status.error {
+      background: #fde1e1;
+      color: #8b1e1e;
+    }
+
+    /* ================= CONTACT ================= */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .contact-card {
+      background: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 14px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.08);
+      transition: .2s;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .contact-card h3 {
+      color: #a47d10;
+      margin-bottom: 8px;
+    }
+
+    .contact-card a {
+      color: #333;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      background: #151515;
+      color: white;
+      padding: 35px 20px;
+      text-align: center;
+    }
+
+    footer span {
+      color: #d4af37;
+    }
+
+    /* ================= WHATSAPP ================= */
+
+    .whatsapp {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 999;
+      background: #25d366;
+      color: white;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,.25);
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width: 850px) {
+
+      .nav {
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: center;
+        gap: 14px;
+      }
+
+      .quick-grid,
+      .service-grid,
+      .menu-grid,
+      .rooms-grid,
+      .contact-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .about-grid,
+      .reservation-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width: 600px) {
+
+      .quick-grid,
+      .service-grid,
+      .menu-grid,
+      .rooms-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 55px 15px;
+      }
+
+      .hero {
+        min-height: 75vh;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
+<!-- ================= NAVIGATION ================= -->
 
 <header>
-    <div class="nav-container">
+  <nav class="nav">
 
-        <a href="#home" class="logo">
-            🍽️ MAKA-VILLA
-        </a>
+    <a href="#home" class="logo">✈️ MAKA-VILLA</a>
 
-        <button class="menu-toggle" id="menuToggle">
-            ☰
-        </button>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#accommodation">Accommodation</a></li>
+      <li><a href="#reservation">Reservation</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
 
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#rooms">Rooms</a></li>
-            <li><a href="#booking">Reservations</a></li>
-            <li><a href="#status">Check Booking</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-
-    </div>
+  </nav>
 </header>
 
 
-<!-- ================= HERO ================= -->
+<!-- ================= HOME ================= -->
 
-<section class="hero" id="home">
+<section id="home" class="hero">
 
-    <div class="hero-content">
+  <div class="hero-content">
 
-        <h1>Welcome to Maka-Villa</h1>
+    <h1>Welcome to <span>Maka-Villa</span></h1>
 
-        <p>
-            Bar • Restaurant • Accommodation
-        </p>
+    <p>
+      Bar, Restaurant & Accommodation in Murang'a, Kenya.
+      Enjoy delicious meals, refreshing drinks, relaxing accommodation
+      and memorable moments.
+    </p>
 
-        <p>
-            Enjoy great food, refreshing drinks and comfortable accommodation
-            in Murang'a.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a href="#menu" class="btn btn-gold">
-                🍽️ View Menu
-            </a>
-
-            <a href="#booking" class="btn btn-outline">
-                📅 Make a Reservation
-            </a>
-
-        </div>
-
+    <div class="hero-buttons">
+      <a href="#menu" class="btn btn-gold">Explore Menu</a>
+      <a href="#reservation" class="btn btn-dark">Make a Reservation</a>
     </div>
+
+  </div>
 
 </section>
 
 
-<!-- ================= HOW CAN WE HELP ================= -->
+<!-- ================= QUICK CARDS ================= -->
 
-<section>
+<section class="quick-section">
 
-    <div class="container">
+  <div class="container">
 
-        <div class="section-title">
+    <div class="quick-grid">
 
-            <h2>How Can We Help You?</h2>
+      <!-- MENU -->
 
-            <p>
-                Choose what you would like to do at Maka-Villa.
-            </p>
+      <div
+        class="quick-card"
+        role="button"
+        tabindex="0"
+        data-target="menu"
+      >
 
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        >
+          <source
+            src="https://cdn.coverr.co/videos/coverr-serving-a-delicious-meal-1573/1080p.mp4"
+            type="video/mp4"
+          >
+        </video>
+
+        <button
+          type="button"
+          class="sound-btn"
+          data-sound
+        >🔇</button>
+
+        <div class="quick-overlay">
+          <h3>Menu</h3>
+          <p>Explore our meals and refreshments.</p>
         </div>
 
-
-        <div class="help-grid">
-
-            <div class="help-card">
-
-                <div class="help-icon">🍛</div>
-
-                <h3>Order Food</h3>
-
-                <p>
-                    Browse our menu and create your food order.
-                </p>
-
-                <a href="#menu" class="btn btn-dark">
-                    View Menu
-                </a>
-
-            </div>
+      </div>
 
 
-            <div class="help-card">
+      <!-- RESERVATION -->
 
-                <div class="help-icon">📅</div>
+      <div
+        class="quick-card"
+        role="button"
+        tabindex="0"
+        data-target="reservation"
+      >
 
-                <h3>Make a Reservation</h3>
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        >
+          <source
+            src="https://cdn.coverr.co/videos/coverr-hotel-lobby-1572/1080p.mp4"
+            type="video/mp4"
+          >
+        </video>
 
-                <p>
-                    Reserve a table for your next visit.
-                </p>
+        <button
+          type="button"
+          class="sound-btn"
+          data-sound
+        >🔇</button>
 
-                <a href="#restaurantBooking" class="btn btn-dark">
-                    Reserve Table
-                </a>
-
-            </div>
-
-
-            <div class="help-card">
-
-                <div class="help-icon">🏨</div>
-
-                <h3>Book Accommodation</h3>
-
-                <p>
-                    Reserve a room and enjoy a comfortable stay.
-                </p>
-
-                <a href="#accommodationBooking" class="btn btn-dark">
-                    Book Room
-                </a>
-
-            </div>
-
+        <div class="quick-overlay">
+          <h3>Make a Reservation</h3>
+          <p>Reserve a table or accommodation.</p>
         </div>
+
+      </div>
+
+
+      <!-- ACCOMMODATION -->
+
+      <div
+        class="quick-card"
+        role="button"
+        tabindex="0"
+        data-target="accommodation"
+      >
+
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        >
+          <source
+            src="https://cdn.coverr.co/videos/coverr-a-modern-hotel-room-1570/1080p.mp4"
+            type="video/mp4"
+          >
+        </video>
+
+        <button
+          type="button"
+          class="sound-btn"
+          data-sound
+        >🔇</button>
+
+        <div class="quick-overlay">
+          <h3>Accommodation</h3>
+          <p>Relax in a comfortable environment.</p>
+        </div>
+
+      </div>
 
     </div>
+
+  </div>
 
 </section>
 
 
 <!-- ================= ABOUT ================= -->
 
-<section class="about">
+<section id="about">
 
-    <div class="container">
+  <div class="container">
 
-        <div class="about-grid">
-
-            <div>
-
-                <h2>About Maka-Villa</h2>
-
-                <p>
-                    Maka-Villa Bar & Restaurant is a hospitality destination
-                    in Murang'a offering food, drinks, entertainment and
-                    accommodation.
-                </p>
-
-                <p>
-                    Whether you are coming for a meal, meeting friends,
-                    celebrating an occasion or staying overnight, we aim to
-                    make your experience comfortable and enjoyable.
-                </p>
-
-                <a href="#booking" class="btn btn-gold">
-                    Make a Reservation
-                </a>
-
-            </div>
-
-            <img
-                src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=80"
-                alt="Restaurant interior"
-            >
-
-        </div>
-
+    <div class="section-title">
+      <h2>About Maka-Villa</h2>
+      <p>A place to eat, relax, stay and enjoy.</p>
     </div>
 
-</section>
+    <div class="about-grid">
 
+      <div class="about-image"></div>
 
-<!-- ================= MENU ================= -->
+      <div class="about-text">
 
-<section class="menu-section" id="menu">
+        <h2>Your Home Away From Home</h2>
 
-    <div class="container">
-
-        <div class="section-title">
-
-            <h2>Our Menu</h2>
-
-            <p>
-                Explore some of the meals and drinks available at Maka-Villa.
-            </p>
-
-        </div>
-
-        <p class="menu-note">
-            Menu prices shown on this website are sample/estimated prices and
-            should be confirmed with Maka-Villa before ordering.
+        <p>
+          Maka-Villa is a hospitality destination in Murang'a,
+          Kenya, bringing together a restaurant, bar and accommodation
+          services in one convenient location.
         </p>
 
+        <p>
+          Whether you are looking for a delicious meal, a refreshing
+          drink, a place to relax or somewhere comfortable to stay,
+          Maka-Villa is designed to give you a memorable experience.
+        </p>
 
-        <div class="category-buttons">
+        <a href="#reservation" class="btn btn-gold">
+          Book With Us
+        </a>
 
-            <button class="category-btn active" data-category="All">
-                All
-            </button>
-
-            <button class="category-btn" data-category="Breakfast">
-                Breakfast
-            </button>
-
-            <button class="category-btn" data-category="Main Meals">
-                Main Meals
-            </button>
-
-            <button class="category-btn" data-category="Grill">
-                Grill
-            </button>
-
-            <button class="category-btn" data-category="Sides">
-                Sides
-            </button>
-
-            <button class="category-btn" data-category="Drinks">
-                Drinks
-            </button>
-
-            <button class="category-btn" data-category="Hot Drinks">
-                Hot Drinks
-            </button>
-
-        </div>
-
-
-        <div class="menu-grid" id="menuGrid"></div>
-
-
-        <div class="cart">
-
-            <h3>🛒 Your Food Order</h3>
-
-            <div id="cartItems">
-                Your cart is empty.
-            </div>
-
-            <div class="cart-total">
-                Total: KSh <span id="cartTotal">0</span>
-            </div>
-
-            <div class="cart-actions">
-
-                <button
-                    class="btn btn-gold"
-                    onclick="sendOrderWhatsApp()">
-                    📱 Send Order via WhatsApp
-                </button>
-
-                <button
-                    class="btn btn-outline"
-                    onclick="clearCart()">
-                    Clear Cart
-                </button>
-
-            </div>
-
-        </div>
+      </div>
 
     </div>
+
+  </div>
 
 </section>
 
@@ -1145,687 +788,537 @@
 
 <section id="services">
 
-    <div class="container">
+  <div class="container">
 
-        <div class="section-title">
+    <div class="section-title">
+      <h2>Our Services</h2>
+      <p>Everything you need in one place.</p>
+    </div>
 
-            <h2>Everything You Need in One Place</h2>
+    <div class="service-grid">
 
-            <p>
-                Restaurant, bar and accommodation services.
-            </p>
+      <div class="service-card">
+        <h3>🍽️ Restaurant</h3>
+        <p>
+          Enjoy a variety of delicious meals prepared for individuals,
+          families and groups.
+        </p>
+      </div>
 
-        </div>
+      <div class="service-card">
+        <h3>🍹 Bar</h3>
+        <p>
+          Relax and enjoy a comfortable environment with refreshing
+          drinks and good company.
+        </p>
+      </div>
 
-
-        <div class="service-grid">
-
-            <div class="service-card restaurant-service">
-
-                <h3>🍽️ Restaurant</h3>
-
-                <p>
-                    Enjoy delicious meals prepared for different tastes.
-                </p>
-
-            </div>
-
-
-            <div class="service-card bar-service">
-
-                <h3>🍹 Bar & Grill</h3>
-
-                <p>
-                    Relax with friends and enjoy our grill and refreshments.
-                </p>
-
-            </div>
-
-
-            <div class="service-card accommodation-service">
-
-                <h3>🏨 Accommodation</h3>
-
-                <p>
-                    Comfortable rooms for visitors staying in Murang'a.
-                </p>
-
-            </div>
-
-        </div>
+      <div class="service-card">
+        <h3>🏨 Accommodation</h3>
+        <p>
+          Comfortable rooms for guests looking for a relaxing stay
+          in Murang'a.
+        </p>
+      </div>
 
     </div>
+
+  </div>
 
 </section>
 
 
-<!-- ================= ROOMS ================= -->
+<!-- ================= MENU ================= -->
 
-<section id="rooms">
+<section id="menu" class="menu-section">
 
-    <div class="container">
+  <div class="container">
 
-        <div class="section-title">
+    <div class="section-title">
 
-            <h2>Accommodation</h2>
+      <h2>Our Menu</h2>
 
-            <p>
-                Choose your preferred room type.
-            </p>
-
-        </div>
-
-
-        <div class="rooms-grid">
-
-            <div class="room-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80"
-                    alt="Standard room"
-                >
-
-                <div class="room-content">
-
-                    <h3>Standard Room</h3>
-
-                    <p>
-                        A comfortable room suitable for individual travellers
-                        or couples.
-                    </p>
-
-                    <div class="room-price">
-                        KSh 2,500 / night
-                    </div>
-
-                    <div class="estimate">
-                        Sample/estimated price — confirm before booking.
-                    </div>
-
-                    <button
-                        class="btn btn-dark"
-                        onclick="selectRoom('Standard Room')">
-                        Book This Room
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="room-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80"
-                    alt="Deluxe room"
-                >
-
-                <div class="room-content">
-
-                    <h3>Deluxe Room</h3>
-
-                    <p>
-                        A more spacious option for guests looking for extra
-                        comfort.
-                    </p>
-
-                    <div class="room-price">
-                        KSh 3,500 / night
-                    </div>
-
-                    <div class="estimate">
-                        Sample/estimated price — confirm before booking.
-                    </div>
-
-                    <button
-                        class="btn btn-dark"
-                        onclick="selectRoom('Deluxe Room')">
-                        Book This Room
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="room-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=900&q=80"
-                    alt="Family room"
-                >
-
-                <div class="room-content">
-
-                    <h3>Family Room</h3>
-
-                    <p>
-                        Suitable for families or groups who need additional
-                        space.
-                    </p>
-
-                    <div class="room-price">
-                        Price on request
-                    </div>
-
-                    <div class="estimate">
-                        Contact Maka-Villa for the current rate.
-                    </div>
-
-                    <button
-                        class="btn btn-dark"
-                        onclick="selectRoom('Family Room')">
-                        Book This Room
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
+      <p>
+        A selection of meals and refreshments available at Maka-Villa.
+      </p>
 
     </div>
+
+
+    <div class="menu-grid">
+
+      <div class="menu-item">
+
+        <img
+          src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80"
+          alt="Fresh healthy meal"
+        >
+
+        <div class="menu-info">
+
+          <h3>Delicious Meals</h3>
+
+          <p>
+            Freshly prepared meals for your enjoyment.
+          </p>
+
+          <div class="price">
+            Ask for today's price
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="menu-item">
+
+        <img
+          src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80"
+          alt="Food"
+        >
+
+        <div class="menu-info">
+
+          <h3>Local Favourites</h3>
+
+          <p>
+            Enjoy popular Kenyan dishes and favourites.
+          </p>
+
+          <div class="price">
+            Ask for today's price
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="menu-item">
+
+        <img
+          src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=80"
+          alt="Refreshing drinks"
+        >
+
+        <div class="menu-info">
+
+          <h3>Refreshing Drinks</h3>
+
+          <p>
+            Refresh yourself with a variety of beverages.
+          </p>
+
+          <div class="price">
+            Ask for today's price
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- ================= GALLERY ================= -->
+<!-- ================= ACCOMMODATION ================= -->
 
-<section class="gallery">
+<section id="accommodation">
 
-    <div class="container">
+  <div class="container">
 
-        <div class="section-title">
+    <div class="section-title">
 
-            <h2>Gallery</h2>
+      <h2>Accommodation</h2>
 
-            <p>
-                Hospitality images used for illustration.
-            </p>
-
-        </div>
-
-
-        <div class="gallery-grid">
-
-            <img
-                src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80"
-                alt="Restaurant"
-                onclick="openImage(this.src)"
-            >
-
-            <img
-                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
-                alt="Restaurant dining"
-                onclick="openImage(this.src)"
-            >
-
-            <img
-                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80"
-                alt="Bar"
-                onclick="openImage(this.src)"
-            >
-
-            <img
-                src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80"
-                alt="Hotel room"
-                onclick="openImage(this.src)"
-            >
-
-        </div>
+      <p>
+        Comfortable accommodation for your stay.
+      </p>
 
     </div>
+
+
+    <div class="rooms-grid">
+
+      <div class="room">
+
+        <img
+          src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1000&q=80"
+          alt="Comfortable hotel room"
+        >
+
+        <div class="room-content">
+
+          <h3>Comfortable Rooms</h3>
+
+          <p>
+            Relax in a clean and comfortable environment.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="room">
+
+        <img
+          src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80"
+          alt="Hotel accommodation"
+        >
+
+        <div class="room-content">
+
+          <h3>Relaxing Stay</h3>
+
+          <p>
+            A convenient place to rest after your day.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="room">
+
+        <img
+          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80"
+          alt="Hotel"
+        >
+
+        <div class="room-content">
+
+          <h3>Hospitality</h3>
+
+          <p>
+            Enjoy a welcoming hospitality experience.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- ================= BOOKING AREA ================= -->
+<!-- ================= RESERVATION ================= -->
 
-<section class="booking-area" id="booking">
+<section id="reservation" class="reservation">
 
-    <div class="container">
+  <div class="container">
 
-        <div class="section-title">
+    <div class="section-title">
 
-            <h2>Make a Reservation</h2>
+      <h2 style="color:white;">Make a Reservation</h2>
 
-            <p>
-                Fill in your details and Maka-Villa will receive your booking.
-            </p>
-
-        </div>
-
-
-        <div class="forms-grid">
-
-            <!-- RESTAURANT -->
-
-            <div class="form-card" id="restaurantBooking">
-
-                <h3>🍽️ Restaurant Reservation</h3>
-
-                <form id="restaurantForm">
-
-                    <div class="form-group">
-
-                        <label>Full Name *</label>
-
-                        <input
-                            type="text"
-                            id="restaurantName"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-
-                            <label>Phone *</label>
-
-                            <input
-                                type="tel"
-                                id="restaurantPhone"
-                                required
-                                placeholder="07XXXXXXXX"
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>Email *</label>
-
-                            <input
-                                type="email"
-                                id="restaurantEmail"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-
-                            <label>Number of Guests *</label>
-
-                            <input
-                                type="number"
-                                id="restaurantGuests"
-                                min="1"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>Date *</label>
-
-                            <input
-                                type="date"
-                                id="restaurantDate"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>Preferred Time *</label>
-
-                        <input
-                            type="time"
-                            id="restaurantTime"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>Special Request</label>
-
-                        <textarea
-                            id="restaurantMessage"
-                            rows="4"
-                            placeholder="Birthday, meeting, special seating, etc."
-                        ></textarea>
-
-                    </div>
-
-
-                    <button
-                        type="submit"
-                        class="btn btn-gold">
-                        Submit Restaurant Reservation
-                    </button>
-
-                </form>
-
-            </div>
-
-
-            <!-- ACCOMMODATION -->
-
-            <div class="form-card" id="accommodationBooking">
-
-                <h3>🏨 Accommodation Booking</h3>
-
-                <form id="accommodationForm">
-
-                    <div class="form-group">
-
-                        <label>Full Name *</label>
-
-                        <input
-                            type="text"
-                            id="accommodationName"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-
-                            <label>Phone *</label>
-
-                            <input
-                                type="tel"
-                                id="accommodationPhone"
-                                required
-                                placeholder="07XXXXXXXX"
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>Email *</label>
-
-                            <input
-                                type="email"
-                                id="accommodationEmail"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-
-                            <label>Guests *</label>
-
-                            <input
-                                type="number"
-                                id="accommodationGuests"
-                                min="1"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>Number of Rooms *</label>
-
-                            <input
-                                type="number"
-                                id="accommodationRooms"
-                                min="1"
-                                value="1"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>Room Type *</label>
-
-                        <select
-                            id="roomType"
-                            required>
-
-                            <option value="">
-                                Select room type
-                            </option>
-
-                            <option value="Standard Room">
-                                Standard Room
-                            </option>
-
-                            <option value="Deluxe Room">
-                                Deluxe Room
-                            </option>
-
-                            <option value="Family Room">
-                                Family Room
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-
-                            <label>Check-in *</label>
-
-                            <input
-                                type="date"
-                                id="checkin"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label>Check-out *</label>
-
-                            <input
-                                type="date"
-                                id="checkout"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>Preferred Check-in Time</label>
-
-                        <input
-                            type="time"
-                            id="accommodationTime"
-                            value="14:00"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>Special Request</label>
-
-                        <textarea
-                            id="accommodationMessage"
-                            rows="4"
-                            placeholder="Any special accommodation request?"
-                        ></textarea>
-
-                    </div>
-
-
-                    <button
-                        type="submit"
-                        class="btn btn-gold">
-                        Submit Accommodation Booking
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
+      <p style="color:#ddd;">
+        Fill in the details below and send your reservation request.
+      </p>
 
     </div>
 
-</section>
+
+    <div class="reservation-grid">
 
 
-<!-- ================= CHECK BOOKING ================= -->
+      <!-- RESTAURANT -->
 
-<section class="status-section" id="status">
+      <div class="booking-box">
 
-    <div class="container">
+        <h3>🍽️ Restaurant Reservation</h3>
 
-        <div class="section-title">
-
-            <h2>Check My Booking</h2>
-
-            <p>
-                Enter the booking reference you received after making your
-                reservation.
-            </p>
-
-        </div>
+        <p>
+          Reserve a table for your visit.
+        </p>
 
 
-        <div class="status-box">
+        <form id="restaurantBookingForm">
 
-            <div class="status-search">
+          <div class="form-group">
 
-                <input
-                    type="text"
-                    id="bookingReferenceInput"
-                    placeholder="Example: MAKA-1789888804299"
-                >
+            <label for="restaurantName">
+              Full Name *
+            </label>
 
-                <button
-                    class="btn btn-gold"
-                    onclick="checkBookingStatus()">
-                    Check Status
-                </button>
+            <input
+              id="restaurantName"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              placeholder="Enter your full name"
+            >
 
-            </div>
+          </div>
 
 
-            <div id="statusResult" class="status-result"></div>
+          <div class="form-group">
 
-        </div>
+            <label for="restaurantPhone">
+              Phone Number *
+            </label>
+
+            <input
+              id="restaurantPhone"
+              name="phone"
+              type="tel"
+              required
+              autocomplete="tel"
+              placeholder="e.g. 0712345678"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="restaurantDate">
+              Date *
+            </label>
+
+            <input
+              id="restaurantDate"
+              name="date"
+              type="date"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="restaurantGuests">
+              Number of Guests *
+            </label>
+
+            <input
+              id="restaurantGuests"
+              name="guests"
+              type="number"
+              min="1"
+              max="100"
+              required
+              placeholder="Number of guests"
+            >
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            Submit Restaurant Booking
+          </button>
+
+
+          <div
+            id="restaurantStatus"
+            class="status"
+          ></div>
+
+        </form>
+
+      </div>
+
+
+      <!-- ACCOMMODATION -->
+
+      <div class="booking-box">
+
+        <h3>🏨 Accommodation Booking</h3>
+
+        <p>
+          Request accommodation at Maka-Villa.
+        </p>
+
+
+        <form id="accommodationBookingForm">
+
+          <div class="form-group">
+
+            <label for="accommodationName">
+              Full Name *
+            </label>
+
+            <input
+              id="accommodationName"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              placeholder="Enter your full name"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="accommodationPhone">
+              Phone Number *
+            </label>
+
+            <input
+              id="accommodationPhone"
+              name="phone"
+              type="tel"
+              required
+              autocomplete="tel"
+              placeholder="e.g. 0712345678"
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="checkin">
+              Check-in Date *
+            </label>
+
+            <input
+              id="checkin"
+              name="checkin"
+              type="date"
+              required
+            >
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="checkout">
+              Check-out Date *
+            </label>
+
+            <input
+              id="checkout"
+              name="checkout"
+              type="date"
+              required
+            >
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="submit-btn"
+          >
+            Submit Accommodation Booking
+          </button>
+
+
+          <div
+            id="accommodationStatus"
+            class="status"
+          ></div>
+
+        </form>
+
+      </div>
 
     </div>
+
+  </div>
 
 </section>
 
 
 <!-- ================= CONTACT ================= -->
 
-<section class="contact" id="contact">
+<section id="contact">
 
-    <div class="container">
+  <div class="container">
 
-        <div class="section-title">
+    <div class="section-title">
 
-            <h2>Contact Maka-Villa</h2>
+      <h2>Contact Maka-Villa</h2>
 
-            <p>
-                We would be happy to hear from you.
-            </p>
-
-        </div>
-
-
-        <div class="contact-grid">
-
-            <div class="contact-card">
-
-                <div class="icon">📱</div>
-
-                <h3>Phone</h3>
-
-                <a href="tel:0742020633">
-                    0742 020 633
-                </a>
-
-            </div>
-
-
-            <div class="contact-card">
-
-                <div class="icon">💬</div>
-
-                <h3>WhatsApp</h3>
-
-                <a
-                    href="https://wa.me/254742020633"
-                    target="_blank">
-                    0742 020 633
-                </a>
-
-            </div>
-
-
-            <div class="contact-card">
-
-                <div class="icon">📧</div>
-
-                <h3>Email</h3>
-
-                <a href="mailto:robii254.ke@gmail.com">
-                    robii254.ke@gmail.com
-                </a>
-
-            </div>
-
-
-            <div class="contact-card">
-
-                <div class="icon">📍</div>
-
-                <h3>Location</h3>
-
-                <p>
-                    Murang'a, Kenya
-                </p>
-
-            </div>
-
-        </div>
+      <p>
+        Get in touch with us.
+      </p>
 
     </div>
+
+
+    <div class="contact-grid">
+
+
+      <a
+        class="contact-card"
+        href="tel:0742020633"
+      >
+
+        <h3>📞 Phone</h3>
+
+        <p>
+          0742020633
+        </p>
+
+      </a>
+
+
+      <a
+        class="contact-card"
+        href="mailto:robii254.ke@gmail.com"
+      >
+
+        <h3>✉️ Email</h3>
+
+        <p>
+          robii254.ke@gmail.com
+        </p>
+
+      </a>
+
+
+      <a
+        class="contact-card"
+        href="https://wa.me/254742020633"
+        target="_blank"
+        rel="noopener"
+      >
+
+        <h3>💬 WhatsApp</h3>
+
+        <p>
+          Chat with us
+        </p>
+
+      </a>
+
+
+      <a
+        class="contact-card"
+        href="https://www.google.com/maps/search/?api=1&query=75G4%2BXR6%2C+C71%2C+Murang%27a%2C+Kenya"
+        target="_blank"
+        rel="noopener"
+      >
+
+        <h3>📍 Location</h3>
+
+        <p>
+          75G4+XR6, C71, Murang'a, Kenya
+        </p>
+
+      </a>
+
+    </div>
+
+  </div>
 
 </section>
 
@@ -1834,1253 +1327,739 @@
 
 <footer>
 
-    <p>
-        © <span id="year"></span>
-        <strong>Maka-Villa Bar & Restaurant</strong>.
-        All rights reserved.
-    </p>
+  <p>
+    © <span id="year"></span>
+    Maka-Villa Bar, Restaurant & Accommodation.
+    All rights reserved.
+  </p>
 
 </footer>
 
 
-<!-- ================= SUCCESS MODAL ================= -->
+<!-- ================= WHATSAPP ================= -->
 
-<div class="modal" id="successModal">
-
-    <div class="modal-content">
-
-        <button
-            class="modal-close"
-            onclick="closeModal('successModal')">
-            ×
-        </button>
-
-        <div class="success-icon">
-            ✅
-        </div>
-
-        <h2 style="text-align:center;">
-            Booking Received!
-        </h2>
-
-        <p style="text-align:center;">
-            Your booking has been received by Maka-Villa.
-        </p>
-
-        <div class="reference-box" id="successReference">
-            MAKA-000000
-        </div>
-
-        <p style="text-align:center;">
-            Save this reference number. You can use it to check your booking
-            status later.
-        </p>
-
-        <div class="summary" id="successSummary"></div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-
-            <button
-                class="btn btn-dark"
-                onclick="copyReference()">
-                📋 Copy Reference
-            </button>
-
-            <button
-                class="btn btn-gold"
-                onclick="whatsappBookingReference()">
-                💬 WhatsApp Maka-Villa
-            </button>
-
-        </div>
-
-        <br>
-
-        <button
-            class="btn btn-outline"
-            onclick="closeModal('successModal')">
-            Close
-        </button>
-
-    </div>
-
-</div>
+<a
+  class="whatsapp"
+  href="https://wa.me/254742020633?text=Hello%20Maka-Villa%2C%20I%20would%20like%20to%20make%20a%20booking."
+  target="_blank"
+  rel="noopener"
+  aria-label="Chat on WhatsApp"
+>
+  💬
+</a>
 
 
-<!-- ================= IMAGE MODAL ================= -->
-
-<div class="modal" id="imageModal">
-
-    <div class="modal-content"
-         style="padding:10px; max-width:900px; background:transparent;">
-
-        <button
-            class="modal-close"
-            style="color:white;"
-            onclick="closeModal('imageModal')">
-            ×
-        </button>
-
-        <img
-            id="largeImage"
-            src=""
-            alt="Gallery image"
-            style="width:100%; border-radius:10px;"
-        >
-
-    </div>
-
-</div>
-
-
-<!-- ================= TOAST ================= -->
-
-<div id="toast"></div>
-
+<!-- ================= JAVASCRIPT ================= -->
 
 <script>
 
-    /* =========================================================
-       BASIC SETTINGS
-    ========================================================= */
+  /* =========================================
+     MAKA-VILLA CONFIGURATION
+  ========================================= */
 
-    const API_URL =
-        "https://makavilla-backend-2026.onrender.com";
+  const API_URL =
+    "https://makavilla-backend-2026.onrender.com";
 
-    const WHATSAPP_NUMBER =
-        "254742020633";
+  const WHATSAPP_NUMBER =
+    "254742020633";
 
 
-    /* =========================================================
-       MOBILE MENU
-    ========================================================= */
+  /* =========================================
+     PAGE YEAR
+  ========================================= */
 
-    const menuToggle =
-        document.getElementById("menuToggle");
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
 
-    const navLinks =
-        document.getElementById("navLinks");
 
-    menuToggle.addEventListener("click", () => {
+  /* =========================================
+     SET MINIMUM DATES
+  ========================================= */
 
-        navLinks.classList.toggle("show");
+  const today =
+    new Date().toISOString().split("T")[0];
+
+  const restaurantDate =
+    document.getElementById("restaurantDate");
+
+  const checkin =
+    document.getElementById("checkin");
+
+  const checkout =
+    document.getElementById("checkout");
+
+
+  restaurantDate.min = today;
+  checkin.min = today;
+  checkout.min = today;
+
+
+  checkin.addEventListener("change", function() {
+
+    checkout.min = this.value;
+
+    if (
+      checkout.value &&
+      checkout.value <= this.value
+    ) {
+      checkout.value = "";
+    }
+
+  });
+
+
+  /* =========================================
+     QUICK CARD NAVIGATION
+  ========================================= */
+
+  document.querySelectorAll(".quick-card").forEach(card => {
+
+    card.addEventListener("click", function(event) {
+
+      if (
+        event.target.closest(".sound-btn")
+      ) {
+        return;
+      }
+
+      const target =
+        this.dataset.target;
+
+      const section =
+        document.getElementById(target);
+
+      if (section) {
+
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+      }
 
     });
 
 
-    document.querySelectorAll(".nav-links a")
-        .forEach(link => {
+    card.addEventListener("keydown", function(event) {
 
-            link.addEventListener("click", () => {
+      if (
+        event.key === "Enter" ||
+        event.key === " "
+      ) {
 
-                navLinks.classList.remove("show");
+        event.preventDefault();
 
-            });
+        const target =
+          this.dataset.target;
 
-        });
+        const section =
+          document.getElementById(target);
 
+        if (section) {
 
-    /* =========================================================
-       YEAR
-    ========================================================= */
-
-    document.getElementById("year").textContent =
-        new Date().getFullYear();
-
-
-    /* =========================================================
-       DATE RESTRICTIONS
-    ========================================================= */
-
-    const today =
-        new Date().toISOString().split("T")[0];
-
-    document.getElementById("restaurantDate").min = today;
-    document.getElementById("checkin").min = today;
-    document.getElementById("checkout").min = today;
-
-
-    document.getElementById("checkin")
-        .addEventListener("change", function () {
-
-            document.getElementById("checkout").min =
-                this.value;
-
-        });
-
-
-    /* =========================================================
-       MENU DATA
-    ========================================================= */
-
-    const menuItems = [
-
-        {
-            name: "Tea & Mandazi",
-            category: "Breakfast",
-            description: "Tea served with fresh mandazi.",
-            price: 180
-        },
-
-        {
-            name: "Tea & Chapati",
-            category: "Breakfast",
-            description: "Hot tea served with chapati.",
-            price: 250
-        },
-
-        {
-            name: "Egg Breakfast",
-            category: "Breakfast",
-            description: "Eggs served with breakfast accompaniments.",
-            price: 350
-        },
-
-        {
-            name: "Full Breakfast",
-            category: "Breakfast",
-            description: "A filling full breakfast.",
-            price: 450
-        },
-
-        {
-            name: "Beef Stew",
-            category: "Main Meals",
-            description: "Tender beef stew served with your preferred accompaniment.",
-            price: 550
-        },
-
-        {
-            name: "Chicken",
-            category: "Main Meals",
-            description: "Chicken meal prepared for a satisfying lunch or dinner.",
-            price: 650
-        },
-
-        {
-            name: "Fish",
-            category: "Main Meals",
-            description: "Fish meal prepared fresh.",
-            price: 700
-        },
-
-        {
-            name: "Vegetarian Meal",
-            category: "Main Meals",
-            description: "A tasty vegetarian meal.",
-            price: 450
-        },
-
-        {
-            name: "Nyama Choma",
-            category: "Grill",
-            description: "Grilled meat served fresh.",
-            price: 800
-        },
-
-        {
-            name: "Nyama Choma Large",
-            category: "Grill",
-            description: "Large nyama choma serving.",
-            price: 1500
-        },
-
-        {
-            name: "Grilled Chicken",
-            category: "Grill",
-            description: "Succulent grilled chicken.",
-            price: 750
-        },
-
-        {
-            name: "Chips",
-            category: "Sides",
-            description: "Crispy chips.",
-            price: 250
-        },
-
-        {
-            name: "Soft Drink",
-            category: "Drinks",
-            description: "Refreshing soft drink.",
-            price: 120
-        },
-
-        {
-            name: "Fresh Juice",
-            category: "Drinks",
-            description: "Fresh fruit juice.",
-            price: 250
-        },
-
-        {
-            name: "Tea",
-            category: "Hot Drinks",
-            description: "Hot Kenyan tea.",
-            price: 120
-        },
-
-        {
-            name: "Coffee",
-            category: "Hot Drinks",
-            description: "Hot coffee.",
-            price: 180
-        }
-
-    ];
-
-
-    let cart = [];
-
-
-    /* =========================================================
-       DISPLAY MENU
-    ========================================================= */
-
-    function displayMenu(category = "All") {
-
-        const menuGrid =
-            document.getElementById("menuGrid");
-
-        const filtered =
-            category === "All"
-                ? menuItems
-                : menuItems.filter(item =>
-                    item.category === category
-                );
-
-
-        menuGrid.innerHTML = filtered.map((item, index) => {
-
-            return `
-                <div class="menu-card">
-
-                    <h3>${escapeHTML(item.name)}</h3>
-
-                    <p>
-                        ${escapeHTML(item.description)}
-                    </p>
-
-                    <div class="menu-bottom">
-
-                        <span class="price">
-                            KSh ${item.price.toLocaleString()}
-                        </span>
-
-                        <button
-                            class="add-btn"
-                            onclick="addToCart(${menuItems.indexOf(item)})">
-                            Add
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
-
-    }
-
-
-    displayMenu();
-
-
-    document.querySelectorAll(".category-btn")
-        .forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                document
-                    .querySelectorAll(".category-btn")
-                    .forEach(btn =>
-                        btn.classList.remove("active")
-                    );
-
-                button.classList.add("active");
-
-                displayMenu(button.dataset.category);
-
-            });
-
-        });
-
-
-    /* =========================================================
-       CART
-    ========================================================= */
-
-    function addToCart(index) {
-
-        const item = menuItems[index];
-
-        const existing =
-            cart.find(cartItem =>
-                cartItem.name === item.name
-            );
-
-
-        if (existing) {
-
-            existing.quantity++;
-
-        } else {
-
-            cart.push({
-                ...item,
-                quantity: 1
-            });
+          section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
 
         }
 
-
-        renderCart();
-
-        showToast(`${item.name} added to your order.`);
-
-    }
-
-
-    function removeFromCart(index) {
-
-        cart.splice(index, 1);
-
-        renderCart();
-
-    }
-
-
-    function changeQuantity(index, amount) {
-
-        cart[index].quantity += amount;
-
-        if (cart[index].quantity <= 0) {
-
-            cart.splice(index, 1);
-
-        }
-
-        renderCart();
-
-    }
-
-
-    function clearCart() {
-
-        cart = [];
-
-        renderCart();
-
-    }
-
-
-    function renderCart() {
-
-        const cartItems =
-            document.getElementById("cartItems");
-
-        const cartTotal =
-            document.getElementById("cartTotal");
-
-
-        if (cart.length === 0) {
-
-            cartItems.innerHTML =
-                "Your cart is empty.";
-
-            cartTotal.textContent =
-                "0";
-
-            return;
-
-        }
-
-
-        let total = 0;
-
-
-        cartItems.innerHTML =
-            cart.map((item, index) => {
-
-                const itemTotal =
-                    item.price * item.quantity;
-
-                total += itemTotal;
-
-
-                return `
-                    <div class="cart-item">
-
-                        <div>
-
-                            <strong>
-                                ${escapeHTML(item.name)}
-                            </strong>
-
-                            <br>
-
-                            KSh ${item.price.toLocaleString()}
-                            × ${item.quantity}
-
-                        </div>
-
-                        <div>
-
-                            <button
-                                onclick="changeQuantity(${index}, -1)">
-                                −
-                            </button>
-
-                            <button
-                                onclick="changeQuantity(${index}, 1)">
-                                +
-                            </button>
-
-                            <button
-                                onclick="removeFromCart(${index})">
-                                Remove
-                            </button>
-
-                        </div>
-
-                    </div>
-                `;
-
-            }).join("");
-
-
-        cartTotal.textContent =
-            total.toLocaleString();
-
-    }
-
-
-    /* =========================================================
-       WHATSAPP FOOD ORDER
-    ========================================================= */
-
-    function sendOrderWhatsApp() {
-
-        if (cart.length === 0) {
-
-            alert("Please add at least one item to your order.");
-
-            return;
-
-        }
-
-
-        let message =
-            "Hello Maka-Villa, I would like to place a food order:%0A%0A";
-
-
-        let total = 0;
-
-
-        cart.forEach(item => {
-
-            const itemTotal =
-                item.price * item.quantity;
-
-            total += itemTotal;
-
-            message +=
-                `• ${item.name} x${item.quantity} - KSh ${itemTotal}%0A`;
-
-        });
-
-
-        message +=
-            `%0ATotal: KSh ${total.toLocaleString()}%0A%0A`;
-
-        message +=
-            "Please confirm availability and the final price.";
-
-
-        window.open(
-            `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
-            "_blank"
-        );
-
-    }
-
-
-    /* =========================================================
-       RESTAURANT BOOKING
-    ========================================================= */
-
-    document.getElementById("restaurantForm")
-        .addEventListener("submit", async function(event) {
-
-            event.preventDefault();
-
-
-            const booking = {
-
-                name:
-                    document.getElementById("restaurantName").value.trim(),
-
-                phone:
-                    document.getElementById("restaurantPhone").value.trim(),
-
-                email:
-                    document.getElementById("restaurantEmail").value.trim(),
-
-                type:
-                    "Restaurant",
-
-                guests:
-                    Number(
-                        document.getElementById("restaurantGuests").value
-                    ),
-
-                date:
-                    document.getElementById("restaurantDate").value,
-
-                time:
-                    document.getElementById("restaurantTime").value,
-
-                message:
-                    document.getElementById("restaurantMessage").value.trim()
-
-            };
-
-
-            await submitBooking(
-                booking,
-                this,
-                "Restaurant reservation"
-            );
-
-        });
-
-
-    /* =========================================================
-       ACCOMMODATION BOOKING
-    ========================================================= */
-
-    document.getElementById("accommodationForm")
-        .addEventListener("submit", async function(event) {
-
-            event.preventDefault();
-
-
-            const checkin =
-                document.getElementById("checkin").value;
-
-            const checkout =
-                document.getElementById("checkout").value;
-
-
-            if (checkout <= checkin) {
-
-                alert("Check-out must be after check-in.");
-
-                return;
-
-            }
-
-
-            const booking = {
-
-                name:
-                    document.getElementById("accommodationName").value.trim(),
-
-                phone:
-                    document.getElementById("accommodationPhone").value.trim(),
-
-                email:
-                    document.getElementById("accommodationEmail").value.trim(),
-
-                type:
-                    "Accommodation",
-
-                guests:
-                    Number(
-                        document.getElementById("accommodationGuests").value
-                    ),
-
-                date:
-                    checkin,
-
-                time:
-                    document.getElementById("accommodationTime").value,
-
-                roomType:
-                    document.getElementById("roomType").value,
-
-                rooms:
-                    Number(
-                        document.getElementById("accommodationRooms").value
-                    ),
-
-                checkin:
-                    checkin,
-
-                checkout:
-                    checkout,
-
-                message:
-                    document.getElementById("accommodationMessage").value.trim()
-
-            };
-
-
-            await submitBooking(
-                booking,
-                this,
-                "Accommodation booking"
-            );
-
-        });
-
-
-    /* =========================================================
-       SUBMIT BOOKING
-    ========================================================= */
-
-    async function submitBooking(
-        booking,
-        form,
-        bookingLabel
-    ) {
-
-        const submitButton =
-            form.querySelector("button[type='submit']");
-
-
-        const originalText =
-            submitButton.textContent;
-
-
-        submitButton.disabled = true;
-
-        submitButton.textContent =
-            "Sending...";
-
-
-        try {
-
-            const response =
-                await fetch(`${API_URL}/api/bookings`, {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(booking)
-
-                });
-
-
-            const result =
-                await response.json();
-
-
-            if (!response.ok || !result.success) {
-
-                throw new Error(
-                    result.message ||
-                    "The booking could not be submitted."
-                );
-
-            }
-
-
-            const savedBooking =
-                result.booking || {};
-
-
-            const reference =
-                savedBooking.reference ||
-                (
-                    savedBooking.id
-                        ? `MAKA-${savedBooking.id}`
-                        : ""
-                );
-
-
-            if (!reference) {
-
-                throw new Error(
-                    "Booking was received, but no booking reference was returned."
-                );
-
-            }
-
-
-            showBookingSuccess(
-                bookingLabel,
-                booking,
-                reference,
-                savedBooking
-            );
-
-
-            form.reset();
-
-
-            if (booking.type === "Accommodation") {
-
-                document.getElementById("accommodationRooms").value =
-                    "1";
-
-                document.getElementById("accommodationTime").value =
-                    "14:00";
-
-            }
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                error.message ||
-                "Something went wrong while submitting your booking."
-            );
-
-        } finally {
-
-            submitButton.disabled = false;
-
-            submitButton.textContent =
-                originalText;
-
-        }
-
-    }
-
-
-    /* =========================================================
-       SUCCESS MODAL
-    ========================================================= */
-
-    let latestBookingReference = "";
-
-
-    function showBookingSuccess(
-        bookingLabel,
-        booking,
-        reference,
-        savedBooking
-    ) {
-
-        latestBookingReference =
-            reference;
-
-
-        document.getElementById("successReference")
-            .textContent =
-            reference;
-
-
-        let summary = `
-            <p><strong>Booking:</strong> ${escapeHTML(bookingLabel)}</p>
-            <p><strong>Guests:</strong> ${booking.guests}</p>
-            <p><strong>Date:</strong> ${escapeHTML(booking.date)}</p>
-            <p><strong>Time:</strong> ${escapeHTML(booking.time || "Not specified")}</p>
-        `;
-
-
-        if (booking.type === "Accommodation") {
-
-            summary += `
-                <p><strong>Room:</strong> ${escapeHTML(booking.roomType)}</p>
-                <p><strong>Rooms:</strong> ${booking.rooms}</p>
-                <p><strong>Check-in:</strong> ${escapeHTML(booking.checkin)}</p>
-                <p><strong>Check-out:</strong> ${escapeHTML(booking.checkout)}</p>
-            `;
-
-        }
-
-
-        summary += `
-            <p>
-                <strong>Status:</strong>
-                <span class="status-badge status-pending">
-                    Pending
-                </span>
-            </p>
-        `;
-
-
-        document.getElementById("successSummary")
-            .innerHTML =
-            summary;
-
-
-        document.getElementById("successModal")
-            .classList.add("show");
-
-    }
-
-
-    function copyReference() {
-
-        if (!latestBookingReference) {
-            return;
-        }
-
-
-        navigator.clipboard
-            .writeText(latestBookingReference)
-            .then(() => {
-
-                showToast(
-                    "Booking reference copied."
-                );
-
-            })
-            .catch(() => {
-
-                showToast(
-                    "Reference: " +
-                    latestBookingReference
-                );
-
-            });
-
-    }
-
-
-    function whatsappBookingReference() {
-
-        if (!latestBookingReference) {
-            return;
-        }
-
-
-        const message =
-            `Hello Maka-Villa, I have just made a booking. My booking reference is ${latestBookingReference}. Please confirm my reservation.`;
-
-        window.open(
-            `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
-            "_blank"
-        );
-
-    }
-
-
-    /* =========================================================
-       CHECK BOOKING STATUS
-    ========================================================= */
-
-    async function checkBookingStatus() {
-
-        let reference =
-            document.getElementById(
-                "bookingReferenceInput"
-            ).value.trim();
-
-
-        if (!reference) {
-
-            alert(
-                "Please enter your booking reference."
-            );
-
-            return;
-
-        }
-
-
-        reference =
-            reference.toUpperCase();
-
-
-        if (!reference.startsWith("MAKA-")) {
-
-            reference =
-                "MAKA-" + reference;
-
-        }
-
-
-        const resultBox =
-            document.getElementById("statusResult");
-
-
-        resultBox.innerHTML = `
-            <p>
-                Checking booking...
-            </p>
-        `;
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_URL}/api/bookings/${encodeURIComponent(reference)}`
-                );
-
-
-            const result =
-                await response.json();
-
-
-            if (!response.ok || !result.success) {
-
-                throw new Error(
-                    result.message ||
-                    "Booking not found."
-                );
-
-            }
-
-
-            const booking =
-                result.booking;
-
-
-            const status =
-                String(
-                    booking.status || "Pending"
-                );
-
-
-            let statusClass =
-                "status-pending";
-
-
-            if (status === "Confirmed") {
-
-                statusClass =
-                    "status-confirmed";
-
-            }
-
-
-            if (status === "Cancelled") {
-
-                statusClass =
-                    "status-cancelled";
-
-            }
-
-
-            let accommodationDetails = "";
-
-
-            if (booking.type === "Accommodation") {
-
-                accommodationDetails = `
-
-                    <p>
-                        <strong>Room:</strong>
-                        ${escapeHTML(booking.roomType || "Not specified")}
-                    </p>
-
-                    <p>
-                        <strong>Rooms:</strong>
-                        ${booking.rooms || "Not specified"}
-                    </p>
-
-                    <p>
-                        <strong>Check-in:</strong>
-                        ${escapeHTML(booking.checkin || booking.date || "")}
-                    </p>
-
-                    <p>
-                        <strong>Check-out:</strong>
-                        ${escapeHTML(booking.checkout || "")}
-                    </p>
-
-                `;
-
-            }
-
-
-            resultBox.innerHTML = `
-
-                <div class="status-card">
-
-                    <h3>
-                        Booking ${escapeHTML(booking.reference)}
-                    </h3>
-
-                    <div class="status-badge ${statusClass}">
-                        ${escapeHTML(status)}
-                    </div>
-
-                    <p>
-                        <strong>Booking Type:</strong>
-                        ${escapeHTML(booking.type)}
-                    </p>
-
-                    <p>
-                        <strong>Guests:</strong>
-                        ${booking.guests}
-                    </p>
-
-                    <p>
-                        <strong>Date:</strong>
-                        ${escapeHTML(booking.date || "")}
-                    </p>
-
-                    <p>
-                        <strong>Time:</strong>
-                        ${escapeHTML(booking.time || "Not specified")}
-                    </p>
-
-                    ${accommodationDetails}
-
-                    <hr style="margin:15px 0;">
-
-                    <p style="color:#666;">
-                        If your booking is still Pending, Maka-Villa
-                        is reviewing your reservation.
-                    </p>
-
-                    <a
-                        href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                            `Hello Maka-Villa, I am checking booking ${booking.reference}.`
-                        )}"
-                        target="_blank"
-                        class="btn btn-dark"
-                        style="display:inline-block; margin-top:10px;">
-                        💬 Contact Maka-Villa
-                    </a>
-
-                </div>
-
-            `;
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            resultBox.innerHTML = `
-
-                <div class="status-card">
-
-                    <h3>
-                        Booking Not Found
-                    </h3>
-
-                    <p>
-                        ${escapeHTML(
-                            error.message ||
-                            "Please check the reference and try again."
-                        )}
-                    </p>
-
-                </div>
-
-            `;
-
-        }
-
-    }
-
-
-    /* =========================================================
-       ROOM SELECTION
-    ========================================================= */
-
-    function selectRoom(roomName) {
-
-        document.getElementById("roomType").value =
-            roomName;
-
-
-        document.getElementById("accommodationBooking")
-            .scrollIntoView({
-                behavior: "smooth"
-            });
-
-
-        showToast(
-            `${roomName} selected. Complete your booking below.`
-        );
-
-    }
-
-
-    /* =========================================================
-       MODALS
-    ========================================================= */
-
-    function openImage(src) {
-
-        document.getElementById("largeImage").src =
-            src;
-
-        document.getElementById("imageModal")
-            .classList.add("show");
-
-    }
-
-
-    function closeModal(id) {
-
-        document.getElementById(id)
-            .classList.remove("show");
-
-    }
-
-
-    window.addEventListener("click", event => {
-
-        if (event.target.classList.contains("modal")) {
-
-            event.target.classList.remove("show");
-
-        }
+      }
 
     });
 
-
-    /* =========================================================
-       TOAST
-    ========================================================= */
-
-    function showToast(message) {
-
-        const toast =
-            document.getElementById("toast");
+  });
 
 
-        toast.textContent =
-            message;
+  /* =========================================
+     VIDEO SOUND BUTTONS
+  ========================================= */
+
+  document.querySelectorAll("[data-sound]").forEach(button => {
+
+    button.addEventListener("click", function(event) {
+
+      event.stopPropagation();
+
+      const card =
+        this.closest(".quick-card");
+
+      const video =
+        card.querySelector("video");
+
+      if (!video) return;
+
+      document.querySelectorAll(".quick-card video").forEach(otherVideo => {
+
+        if (otherVideo !== video) {
+
+          otherVideo.muted = true;
+
+          const otherButton =
+            otherVideo
+              .closest(".quick-card")
+              .querySelector("[data-sound]");
+
+          if (otherButton) {
+            otherButton.textContent = "🔇";
+          }
+
+        }
+
+      });
 
 
-        toast.style.display =
-            "block";
+      video.muted = !video.muted;
+
+      this.textContent =
+        video.muted ? "🔇" : "🔊";
+
+    });
+
+  });
 
 
-        clearTimeout(window.toastTimer);
+  /* =========================================
+     STATUS MESSAGE
+  ========================================= */
+
+  function showStatus(element, message, type) {
+
+    element.textContent = message;
+
+    element.className =
+      "status show " + type;
+
+  }
 
 
-        window.toastTimer =
-            setTimeout(() => {
+  /* =========================================
+     WHATSAPP FALLBACK
+  ========================================= */
 
-                toast.style.display =
-                    "none";
+  function openWhatsApp(message) {
 
-            }, 3000);
+    const url =
+      "https://wa.me/" +
+      WHATSAPP_NUMBER +
+      "?text=" +
+      encodeURIComponent(message);
+
+    window.open(url, "_blank");
+
+  }
+
+
+  /* =========================================
+     RESTAURANT BOOKING
+  ========================================= */
+
+  const restaurantForm =
+    document.getElementById(
+      "restaurantBookingForm"
+    );
+
+
+  restaurantForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const status =
+        document.getElementById(
+          "restaurantStatus"
+        );
+
+
+      /* Browser validation */
+
+      if (!restaurantForm.checkValidity()) {
+
+        restaurantForm.reportValidity();
+
+        return;
+
+      }
+
+
+      const name =
+        restaurantForm.elements["name"]
+          .value
+          .trim();
+
+
+      const phone =
+        restaurantForm.elements["phone"]
+          .value
+          .trim();
+
+
+      const date =
+        restaurantForm.elements["date"]
+          .value;
+
+
+      const guests =
+        restaurantForm.elements["guests"]
+          .value;
+
+
+      if (
+        !name ||
+        !phone ||
+        !date ||
+        !guests
+      ) {
+
+        showStatus(
+          status,
+          "Please fill in all required booking details.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (Number(guests) < 1) {
+
+        showStatus(
+          status,
+          "Please enter at least 1 guest.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      showStatus(
+        status,
+        "Sending your reservation...",
+        "success"
+      );
+
+
+      const bookingData = {
+
+        name: name,
+
+        phone: phone,
+
+        type: "Restaurant",
+
+        date: date,
+
+        details: {
+
+          guests: Number(guests)
+
+        }
+
+      };
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL + "/api/bookings",
+            {
+
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify(
+                  bookingData
+                )
+
+            }
+          );
+
+
+        let result = {};
+
+        try {
+
+          result =
+            await response.json();
+
+        } catch (error) {
+
+          result = {};
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.message ||
+            "The booking server could not process your request."
+          );
+
+        }
+
+
+        const reference =
+          result.reference ||
+          result.bookingReference ||
+          result.bookingId ||
+          "";
+
+
+        showStatus(
+          status,
+          reference
+            ? "Booking submitted successfully. Reference: " + reference
+            : "Booking submitted successfully. We will contact you shortly.",
+          "success"
+        );
+
+
+        restaurantForm.reset();
+
+
+        const whatsappMessage =
+          `Hello Maka-Villa, I have submitted a restaurant reservation.
+
+Name: ${name}
+Phone: ${phone}
+Date: ${date}
+Guests: ${guests}`;
+
+
+        /*
+          The booking has already been sent to
+          the backend.
+
+          WhatsApp is provided as an optional
+          communication fallback.
+        */
+
+        setTimeout(() => {
+
+          if (
+            confirm(
+              "Your booking was submitted successfully. Would you also like to send the booking details on WhatsApp?"
+            )
+          ) {
+
+            openWhatsApp(
+              whatsappMessage
+            );
+
+          }
+
+        }, 300);
+
+
+      } catch (error) {
+
+        console.error(
+          "Restaurant booking error:",
+          error
+        );
+
+
+        showStatus(
+          status,
+          "Booking could not be sent automatically. Please use WhatsApp to send your reservation.",
+          "error"
+        );
+
+
+        const whatsappMessage =
+          `Hello Maka-Villa, I would like to make a restaurant reservation.
+
+Name: ${name}
+Phone: ${phone}
+Date: ${date}
+Guests: ${guests}`;
+
+
+        setTimeout(() => {
+
+          if (
+            confirm(
+              "Would you like to send the reservation through WhatsApp instead?"
+            )
+          ) {
+
+            openWhatsApp(
+              whatsappMessage
+            );
+
+          }
+
+        }, 300);
+
+      }
 
     }
+  );
 
 
-    /* =========================================================
-       SECURITY / HTML ESCAPING
-    ========================================================= */
+  /* =========================================
+     ACCOMMODATION BOOKING
+  ========================================= */
 
-    function escapeHTML(value) {
+  const accommodationForm =
+    document.getElementById(
+      "accommodationBookingForm"
+    );
 
-        return String(value ?? "")
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+
+  accommodationForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const status =
+        document.getElementById(
+          "accommodationStatus"
+        );
+
+
+      if (!accommodationForm.checkValidity()) {
+
+        accommodationForm.reportValidity();
+
+        return;
+
+      }
+
+
+      const name =
+        accommodationForm.elements["name"]
+          .value
+          .trim();
+
+
+      const phone =
+        accommodationForm.elements["phone"]
+          .value
+          .trim();
+
+
+      const checkinDate =
+        accommodationForm.elements["checkin"]
+          .value;
+
+
+      const checkoutDate =
+        accommodationForm.elements["checkout"]
+          .value;
+
+
+      if (
+        !name ||
+        !phone ||
+        !checkinDate ||
+        !checkoutDate
+      ) {
+
+        showStatus(
+          status,
+          "Please fill in all required accommodation details.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        checkoutDate <= checkinDate
+      ) {
+
+        showStatus(
+          status,
+          "Check-out must be after the check-in date.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      showStatus(
+        status,
+        "Sending your accommodation request...",
+        "success"
+      );
+
+
+      const bookingData = {
+
+        name: name,
+
+        phone: phone,
+
+        type: "Accommodation",
+
+        date: checkinDate,
+
+        details: {
+
+          checkin: checkinDate,
+
+          checkout: checkoutDate
+
+        }
+
+      };
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_URL + "/api/bookings",
+            {
+
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify(
+                  bookingData
+                )
+
+            }
+          );
+
+
+        let result = {};
+
+        try {
+
+          result =
+            await response.json();
+
+        } catch (error) {
+
+          result = {};
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.message ||
+            "The booking server could not process your request."
+          );
+
+        }
+
+
+        const reference =
+          result.reference ||
+          result.bookingReference ||
+          result.bookingId ||
+          "";
+
+
+        showStatus(
+          status,
+          reference
+            ? "Accommodation request submitted. Reference: " + reference
+            : "Accommodation request submitted successfully.",
+          "success"
+        );
+
+
+        accommodationForm.reset();
+
+
+        const whatsappMessage =
+          `Hello Maka-Villa, I have submitted an accommodation booking request.
+
+Name: ${name}
+Phone: ${phone}
+Check-in: ${checkinDate}
+Check-out: ${checkoutDate}`;
+
+
+        setTimeout(() => {
+
+          if (
+            confirm(
+              "Your accommodation request was submitted successfully. Would you also like to send the details on WhatsApp?"
+            )
+          ) {
+
+            openWhatsApp(
+              whatsappMessage
+            );
+
+          }
+
+        }, 300);
+
+
+      } catch (error) {
+
+        console.error(
+          "Accommodation booking error:",
+          error
+        );
+
+
+        showStatus(
+          status,
+          "Booking could not be sent automatically. Please use WhatsApp to send the accommodation request.",
+          "error"
+        );
+
+
+        const whatsappMessage =
+          `Hello Maka-Villa, I would like to make an accommodation booking.
+
+Name: ${name}
+Phone: ${phone}
+Check-in: ${checkinDate}
+Check-out: ${checkoutDate}`;
+
+
+        setTimeout(() => {
+
+          if (
+            confirm(
+              "Would you like to send the accommodation request through WhatsApp instead?"
+            )
+          ) {
+
+            openWhatsApp(
+              whatsappMessage
+            );
+
+          }
+
+        }, 300);
+
+      }
 
     }
+  );
 
 </script>
 
