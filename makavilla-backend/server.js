@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 10000;
 
 // ============================================================
 // MAKA-VILLA BACKEND
-// Booking System + Resend Email Notifications
+// Booking System + Reviews + Resend Email Notifications
 // ============================================================
 
 console.log("=================================");
@@ -53,67 +53,117 @@ app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 
 // ============================================================
-// BOOKINGS DATA FILE
+// DATA FILES
 // ============================================================
 
-const BOOKINGS_FILE = path.join(__dirname, "bookings.json");
+const BOOKINGS_FILE =
+  path.join(__dirname, "bookings.json");
 
-// ------------------------------------------------------------
-// LOAD BOOKINGS
-// ------------------------------------------------------------
+const REVIEWS_FILE =
+  path.join(__dirname, "reviews.json");
 
-function loadBookings() {
+// ============================================================
+// GENERIC FILE HELPERS
+// ============================================================
+
+function loadJsonFile(filePath, defaultValue = []) {
   try {
-    if (!fs.existsSync(BOOKINGS_FILE)) {
-      fs.writeFileSync(BOOKINGS_FILE, "[]", "utf8");
-      return [];
+    if (!fs.existsSync(filePath)) {
+      fs.writeFileSync(
+        filePath,
+        JSON.stringify(defaultValue, null, 2),
+        "utf8"
+      );
+
+      return defaultValue;
     }
 
-    const data = fs.readFileSync(
-      BOOKINGS_FILE,
-      "utf8"
-    );
+    const data =
+      fs.readFileSync(filePath, "utf8");
 
     if (!data.trim()) {
-      return [];
+      return defaultValue;
     }
 
-    const bookings = JSON.parse(data);
+    const parsed =
+      JSON.parse(data);
 
-    return Array.isArray(bookings)
-      ? bookings
-      : [];
+    return parsed;
   } catch (error) {
     console.error(
-      "Could not load bookings:",
+      "Could not load JSON file:",
+      filePath,
       error.message
     );
 
-    return [];
+    return defaultValue;
   }
 }
 
-// ------------------------------------------------------------
-// SAVE BOOKINGS
-// ------------------------------------------------------------
-
-function saveBookings(bookings) {
+function saveJsonFile(filePath, data) {
   try {
     fs.writeFileSync(
-      BOOKINGS_FILE,
-      JSON.stringify(bookings, null, 2),
+      filePath,
+      JSON.stringify(data, null, 2),
       "utf8"
     );
 
     return true;
   } catch (error) {
     console.error(
-      "Could not save bookings:",
+      "Could not save JSON file:",
+      filePath,
       error.message
     );
 
     return false;
   }
+}
+
+// ============================================================
+// BOOKINGS
+// ============================================================
+
+function loadBookings() {
+  const bookings =
+    loadJsonFile(
+      BOOKINGS_FILE,
+      []
+    );
+
+  return Array.isArray(bookings)
+    ? bookings
+    : [];
+}
+
+function saveBookings(bookings) {
+  return saveJsonFile(
+    BOOKINGS_FILE,
+    bookings
+  );
+}
+
+// ============================================================
+// REVIEWS
+// ============================================================
+
+function loadReviews() {
+  const reviews =
+    loadJsonFile(
+      REVIEWS_FILE,
+      []
+    );
+
+  return Array.isArray(reviews)
+    ? reviews
+    : [];
+}
+
+function saveReviews(reviews) {
+  return saveJsonFile(
+    REVIEWS_FILE,
+    reviews
+  );
 }
 
 // ============================================================
@@ -131,22 +181,37 @@ function clean(value) {
   return String(value).trim();
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // GENERATE BOOKING REFERENCE
-// ------------------------------------------------------------
+// ============================================================
 
 function generateReference() {
-  const random = crypto
-    .randomBytes(3)
-    .toString("hex")
-    .toUpperCase();
+  const random =
+    crypto
+      .randomBytes(3)
+      .toString("hex")
+      .toUpperCase();
 
   return `MAKA-${random}`;
 }
 
-// ------------------------------------------------------------
+// ============================================================
+// GENERATE REVIEW ID
+// ============================================================
+
+function generateReviewId() {
+  return (
+    "REV-" +
+    crypto
+      .randomBytes(5)
+      .toString("hex")
+      .toUpperCase()
+  );
+}
+
+// ============================================================
 // ESCAPE HTML
-// ------------------------------------------------------------
+// ============================================================
 
 function escapeHtml(value) {
   return clean(value)
@@ -299,7 +364,7 @@ function getBookingDetailsText(booking) {
 }
 
 // ============================================================
-// SEND EMAILS
+// SEND BOOKING EMAILS
 // ============================================================
 
 async function sendBookingEmails(booking) {
@@ -307,10 +372,6 @@ async function sendBookingEmails(booking) {
     emailSent: false,
     notificationSent: false
   };
-
-  // ----------------------------------------------------------
-  // CHECK RESEND
-  // ----------------------------------------------------------
 
   if (!resend) {
     console.log(
@@ -497,11 +558,18 @@ app.get("/", (req, res) => {
       ? "Resend enabled"
       : "Resend disabled",
 
+    reviewsService:
+      "Enabled",
+
     endpoints: {
-      bookings: "/api/bookings",
+      bookings:
+        "/api/bookings",
 
       publicStatus:
-        "/api/bookings/:reference"
+        "/api/bookings/:reference",
+
+      reviews:
+        "/api/reviews"
     }
   });
 });
@@ -1019,6 +1087,267 @@ app.get(
 );
 
 // ============================================================
+// REVIEWS
+// ============================================================
+
+// ------------------------------------------------------------
+// GET ALL REVIEWS
+// ------------------------------------------------------------
+
+app.get(
+  "/api/reviews",
+  (req, res) => {
+    try {
+      const reviews =
+        loadReviews();
+
+      // Newest reviews first
+      reviews.sort(
+        (a, b) =>
+          new Date(b.createdAt) -
+          new Date(a.createdAt)
+      );
+
+      const total =
+        reviews.length;
+
+      const average =
+        total > 0
+          ? reviews.reduce(
+              (sum, review) =>
+                sum +
+                Number(review.rating),
+              0
+            ) / total
+          : 0;
+
+      res.json({
+        success: true,
+
+        count:
+          total,
+
+        averageRating:
+          Number(
+            average.toFixed(1)
+          ),
+
+        reviews
+      });
+    } catch (error) {
+      console.error(
+        "Could not retrieve reviews:",
+        error.message
+      );
+
+      res.status(500).json({
+        success: false,
+
+        error:
+          "Could not retrieve reviews."
+      });
+    }
+  }
+);
+
+// ------------------------------------------------------------
+// CREATE REVIEW
+// ------------------------------------------------------------
+
+app.post(
+  "/api/reviews",
+  (req, res) => {
+    try {
+      console.log("");
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        "NEW REVIEW REQUEST"
+      );
+
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        JSON.stringify(
+          req.body,
+          null,
+          2
+        )
+      );
+
+      const name =
+        clean(
+          req.body?.name
+        );
+
+      const comment =
+        clean(
+          req.body?.comment ||
+          req.body?.review ||
+          req.body?.message
+        );
+
+      const rating =
+        Number(
+          req.body?.rating
+        );
+
+      // ======================================================
+      // VALIDATION
+      // ======================================================
+
+      if (!name) {
+        return res.status(400).json({
+          success: false,
+
+          error:
+            "Please enter your name."
+        });
+      }
+
+      if (name.length > 80) {
+        return res.status(400).json({
+          success: false,
+
+          error:
+            "Name is too long."
+        });
+      }
+
+      if (
+        !Number.isInteger(rating) ||
+        rating < 1 ||
+        rating > 5
+      ) {
+        return res.status(400).json({
+          success: false,
+
+          error:
+            "Please select a rating from 1 to 5 stars."
+        });
+      }
+
+      if (!comment) {
+        return res.status(400).json({
+          success: false,
+
+          error:
+            "Please write a review."
+        });
+      }
+
+      if (comment.length < 5) {
+        return res.status(400).json({
+          success: false,
+
+          error:
+            "Please write a little more about your experience."
+        });
+      }
+
+      if (comment.length > 1000) {
+        return res.status(400).json({
+          success: false,
+
+          error:
+            "Your review is too long."
+        });
+      }
+
+      // ======================================================
+      // LOAD REVIEWS
+      // ======================================================
+
+      const reviews =
+        loadReviews();
+
+      // ======================================================
+      // CREATE REVIEW
+      // ======================================================
+
+      const newReview = {
+        id:
+          generateReviewId(),
+
+        name,
+
+        rating,
+
+        comment,
+
+        createdAt:
+          new Date().toISOString()
+      };
+
+      reviews.push(
+        newReview
+      );
+
+      const saved =
+        saveReviews(reviews);
+
+      if (!saved) {
+        return res.status(500).json({
+          success: false,
+
+          error:
+            "Your review could not be saved. Please try again."
+        });
+      }
+
+      console.log(
+        "REVIEW SAVED SUCCESSFULLY"
+      );
+
+      console.log(
+        "Review ID:",
+        newReview.id
+      );
+
+      console.log(
+        "Reviewer:",
+        newReview.name
+      );
+
+      console.log(
+        "Rating:",
+        newReview.rating
+      );
+
+      console.log(
+        "================================="
+      );
+
+      return res.status(201).json({
+        success: true,
+
+        message:
+          "Thank you for sharing your experience.",
+
+        review:
+          newReview
+      });
+    } catch (error) {
+      console.error(
+        "Review creation error:",
+        error.message
+      );
+
+      return res.status(500).json({
+        success: false,
+
+        error:
+          "An unexpected error occurred while saving your review."
+      });
+    }
+  }
+);
+
+// ============================================================
 // ADMIN LOGIN
 // ============================================================
 
@@ -1229,7 +1558,15 @@ app.listen(
     );
 
     console.log(
+      "Reviews API: /api/reviews"
+    );
+
+    console.log(
       "Accommodation management: ENABLED"
+    );
+
+    console.log(
+      "Reviews management: ENABLED"
     );
 
     console.log(
@@ -1240,7 +1577,7 @@ app.listen(
     );
 
     console.log(
-      "Waiting for bookings..."
+      "Waiting for bookings and reviews..."
     );
 
     console.log(
