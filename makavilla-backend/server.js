@@ -1,4 +1,3 @@
-```javascript
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
@@ -12,17 +11,16 @@ const PORT = process.env.PORT || 10000;
 
 // ============================================================
 // MAKA-VILLA BACKEND
-// ============================================================
-// Booking system + Resend email notifications
+// Booking System + Resend Email Notifications
 // ============================================================
 
 console.log("=================================");
 console.log("MAKA-VILLA BACKEND");
 console.log("=================================");
 
-// ------------------------------------------------------------
-// RESEND EMAIL SERVICE
-// ------------------------------------------------------------
+// ============================================================
+// RESEND EMAIL CONFIGURATION
+// ============================================================
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -41,22 +39,28 @@ if (resend) {
   console.log("Notification email:", NOTIFICATION_EMAIL);
 } else {
   console.log("Email service: Resend DISABLED");
-  console.log("Missing RESEND_API_KEY");
+  console.log("RESEND_API_KEY is missing");
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // MIDDLEWARE
-// ------------------------------------------------------------
+// ============================================================
 
 app.use(cors({ origin: true }));
+
 app.use(express.json({ limit: "1mb" }));
+
 app.use(express.urlencoded({ extended: true }));
 
-// ------------------------------------------------------------
-// DATA FILE
-// ------------------------------------------------------------
+// ============================================================
+// BOOKINGS DATA FILE
+// ============================================================
 
 const BOOKINGS_FILE = path.join(__dirname, "bookings.json");
+
+// ------------------------------------------------------------
+// LOAD BOOKINGS
+// ------------------------------------------------------------
 
 function loadBookings() {
   try {
@@ -65,7 +69,10 @@ function loadBookings() {
       return [];
     }
 
-    const data = fs.readFileSync(BOOKINGS_FILE, "utf8");
+    const data = fs.readFileSync(
+      BOOKINGS_FILE,
+      "utf8"
+    );
 
     if (!data.trim()) {
       return [];
@@ -73,12 +80,22 @@ function loadBookings() {
 
     const bookings = JSON.parse(data);
 
-    return Array.isArray(bookings) ? bookings : [];
+    return Array.isArray(bookings)
+      ? bookings
+      : [];
   } catch (error) {
-    console.error("Could not load bookings:", error.message);
+    console.error(
+      "Could not load bookings:",
+      error.message
+    );
+
     return [];
   }
 }
+
+// ------------------------------------------------------------
+// SAVE BOOKINGS
+// ------------------------------------------------------------
 
 function saveBookings(bookings) {
   try {
@@ -90,30 +107,47 @@ function saveBookings(bookings) {
 
     return true;
   } catch (error) {
-    console.error("Could not save bookings:", error.message);
+    console.error(
+      "Could not save bookings:",
+      error.message
+    );
+
     return false;
   }
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // HELPERS
-// ------------------------------------------------------------
+// ============================================================
 
 function clean(value) {
-  if (value === undefined || value === null) {
+  if (
+    value === undefined ||
+    value === null
+  ) {
     return "";
   }
 
   return String(value).trim();
 }
 
+// ------------------------------------------------------------
+// GENERATE BOOKING REFERENCE
+// ------------------------------------------------------------
+
 function generateReference() {
-  const random = crypto.randomBytes(3).toString("hex").toUpperCase();
+  const random = crypto
+    .randomBytes(3)
+    .toString("hex")
+    .toUpperCase();
 
   return `MAKA-${random}`;
 }
 
-// Escape HTML so customer-provided information is safe in emails
+// ------------------------------------------------------------
+// ESCAPE HTML
+// ------------------------------------------------------------
+
 function escapeHtml(value) {
   return clean(value)
     .replace(/&/g, "&amp;")
@@ -123,9 +157,9 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // NORMALIZE BOOKING
-// ------------------------------------------------------------
+// ============================================================
 
 function normalizeBooking(body) {
   const details =
@@ -135,22 +169,21 @@ function normalizeBooking(body) {
       ? body.details
       : {};
 
-  const booking = {
+  return {
     name: clean(body?.name),
 
     phone: clean(body?.phone),
 
     email: clean(body?.email),
 
-    type: clean(body?.type) || "Restaurant",
+    type:
+      clean(body?.type) ||
+      "Restaurant",
 
-    // Restaurant / event date
     date: clean(body?.date),
 
-    // Optional time
     time: clean(body?.time),
 
-    // Restaurant / event
     guests:
       body?.guests !== undefined
         ? body.guests
@@ -158,13 +191,15 @@ function normalizeBooking(body) {
         ? details.guests
         : "",
 
-    // Accommodation
     checkin:
       clean(body?.checkin) ||
       clean(details.checkin) ||
-      (clean(body?.type).toLowerCase() === "accommodation"
-        ? clean(body?.date)
-        : ""),
+      (
+        clean(body?.type).toLowerCase() ===
+        "accommodation"
+          ? clean(body?.date)
+          : ""
+      ),
 
     checkout:
       clean(body?.checkout) ||
@@ -180,25 +215,27 @@ function normalizeBooking(body) {
 
     details
   };
-
-  return booking;
 }
 
-// ------------------------------------------------------------
-// BOOKING DETAILS FOR EMAIL
-// ------------------------------------------------------------
+// ============================================================
+// EMAIL DETAILS
+// ============================================================
 
 function getBookingDetailsText(booking) {
-  const type = clean(booking.type).toLowerCase();
+  const type =
+    clean(booking.type).toLowerCase();
 
   let text = "";
 
   text += `Booking Reference: ${booking.reference}\n`;
   text += `Customer Name: ${booking.name}\n`;
   text += `Phone: ${booking.phone}\n`;
-  text += `Email: ${booking.email || "Not provided"}\n`;
+  text += `Email: ${
+    booking.email || "Not provided"
+  }\n`;
   text += `Booking Type: ${booking.type}\n`;
 
+  // Restaurant / Bar / Event
   if (
     type === "restaurant" ||
     type === "restaurant booking" ||
@@ -206,39 +243,64 @@ function getBookingDetailsText(booking) {
     type === "table" ||
     type === "bar & lounge" ||
     type === "bar and lounge" ||
+    type === "event" ||
     type === "event / function" ||
-    type === "event/function" ||
-    type === "event"
+    type === "event/function"
   ) {
-    text += `Number of Guests: ${booking.guests || "Not provided"}\n`;
-    text += `Date: ${booking.date || "Not provided"}\n`;
-    text += `Preferred Time: ${booking.time || "Not provided"}\n`;
+    text += `Number of Guests: ${
+      booking.guests || "Not provided"
+    }\n`;
+
+    text += `Date: ${
+      booking.date || "Not provided"
+    }\n`;
+
+    text += `Preferred Time: ${
+      booking.time || "Not provided"
+    }\n`;
   }
 
+  // Accommodation
   if (
     type === "accommodation" ||
     type === "room" ||
     type === "hotel"
   ) {
-    text += `Room Type: ${booking.room || "Not provided"}\n`;
-    text += `Number of Guests: ${booking.guests || "Not provided"}\n`;
-    text += `Check-in: ${booking.checkin || "Not provided"}\n`;
-    text += `Check-out: ${booking.checkout || "Not provided"}\n`;
+    text += `Room Type: ${
+      booking.room || "Not provided"
+    }\n`;
+
+    text += `Number of Guests: ${
+      booking.guests || "Not provided"
+    }\n`;
+
+    text += `Check-in: ${
+      booking.checkin || "Not provided"
+    }\n`;
+
+    text += `Check-out: ${
+      booking.checkout || "Not provided"
+    }\n`;
   }
 
   if (booking.message) {
     text += `Additional Message: ${booking.message}\n`;
   }
 
-  text += `Status: ${booking.status}\n`;
-  text += `Created: ${booking.createdAt}\n`;
+  text += `Status: ${
+    booking.status || "Pending"
+  }\n`;
+
+  text += `Created: ${
+    booking.createdAt || ""
+  }\n`;
 
   return text;
 }
 
-// ------------------------------------------------------------
-// SEND BOOKING EMAILS
-// ------------------------------------------------------------
+// ============================================================
+// SEND EMAILS
+// ============================================================
 
 async function sendBookingEmails(booking) {
   const result = {
@@ -246,65 +308,79 @@ async function sendBookingEmails(booking) {
     notificationSent: false
   };
 
+  // ----------------------------------------------------------
+  // CHECK RESEND
+  // ----------------------------------------------------------
+
   if (!resend) {
-    console.log("Email not sent because Resend is not configured.");
+    console.log(
+      "Email sending skipped: Resend is not configured."
+    );
 
     return result;
   }
 
-  const type = clean(booking.type) || "Booking";
+  const bookingType =
+    booking.type || "Booking";
 
-  const detailsText = getBookingDetailsText(booking);
+  const details =
+    getBookingDetailsText(booking);
 
-  // ----------------------------------------------------------
-  // CUSTOMER EMAIL
-  // ----------------------------------------------------------
+  // ==========================================================
+  // CUSTOMER CONFIRMATION EMAIL
+  // ==========================================================
 
   if (booking.email) {
     try {
       console.log(
-        "Sending customer confirmation email to:",
+        "Sending customer email to:",
         booking.email
       );
 
-      const customerEmail = await resend.emails.send({
-        from: RESEND_FROM_EMAIL,
+      const customerResult =
+        await resend.emails.send({
+          from: RESEND_FROM_EMAIL,
 
-        to: [booking.email],
+          to: [booking.email],
 
-        subject: `Maka-Villa Booking Confirmation - ${booking.reference}`,
+          subject:
+            `Maka-Villa Booking Confirmation - ${booking.reference}`,
 
-        text:
+          text:
 `Hello ${booking.name},
 
 Thank you for choosing Maka-Villa.
 
-Your ${type.toLowerCase()} booking has been successfully received.
+Your ${bookingType.toLowerCase()} booking has been successfully received.
 
-Booking Reference:
+BOOKING REFERENCE
 ${booking.reference}
 
 Please keep this reference number for checking your booking status.
 
 BOOKING DETAILS
-----------------
-${detailsText}
+================
+${details}
 
 Your booking is currently:
-${booking.status}
+
+Pending
 
 A member of the Maka-Villa team will review your booking.
 
+A confirmation has been sent to this email address.
+
 Thank you,
+
 Maka-Villa Bar & Restaurant
 Murang'a, Kenya
 `
-      });
+        });
 
-      if (customerEmail?.error) {
+      if (customerResult?.error) {
         console.error(
           "Customer email error:",
-          customerEmail.error
+          customerResult.error
         );
       } else {
         result.emailSent = true;
@@ -313,59 +389,65 @@ Murang'a, Kenya
           "CUSTOMER CONFIRMATION EMAIL SENT"
         );
 
-        if (customerEmail?.data?.id) {
+        if (customerResult?.data?.id) {
           console.log(
             "Customer email ID:",
-            customerEmail.data.id
+            customerResult.data.id
           );
         }
       }
     } catch (error) {
       console.error(
-        "Customer email sending failed:",
+        "Customer email failed:",
         error.message
       );
     }
   } else {
     console.log(
-      "Customer email not sent: customer did not provide an email address."
+      "Customer email skipped: no customer email provided."
     );
   }
 
-  // ----------------------------------------------------------
+  // ==========================================================
   // BUSINESS NOTIFICATION EMAIL
-  // ----------------------------------------------------------
+  // ==========================================================
 
   if (NOTIFICATION_EMAIL) {
     try {
       console.log(
-        "Sending booking notification to:",
+        "Sending business notification to:",
         NOTIFICATION_EMAIL
       );
 
-      const notificationEmail = await resend.emails.send({
-        from: RESEND_FROM_EMAIL,
+      const notificationResult =
+        await resend.emails.send({
+          from: RESEND_FROM_EMAIL,
 
-        to: [NOTIFICATION_EMAIL],
+          to: [NOTIFICATION_EMAIL],
 
-        subject: `NEW ${type.toUpperCase()} BOOKING - ${booking.reference}`,
+          subject:
+            `NEW ${bookingType.toUpperCase()} BOOKING - ${booking.reference}`,
 
-        text:
-`A new Maka-Villa booking has been received.
+          text:
+`NEW MAKA-VILLA BOOKING
 
-${detailsText}
+A new booking has been received through the Maka-Villa website.
 
-Please log in to the Maka-Villa administration system to review and manage this booking.
+BOOKING DETAILS
+================
+${details}
+
+Please review this booking in the Maka-Villa administration system.
 
 Maka-Villa Bar & Restaurant
 Murang'a, Kenya
 `
-      });
+        });
 
-      if (notificationEmail?.error) {
+      if (notificationResult?.error) {
         console.error(
-          "Notification email error:",
-          notificationEmail.error
+          "Business notification error:",
+          notificationResult.error
         );
       } else {
         result.notificationSent = true;
@@ -374,16 +456,16 @@ Murang'a, Kenya
           "BUSINESS NOTIFICATION EMAIL SENT"
         );
 
-        if (notificationEmail?.data?.id) {
+        if (notificationResult?.data?.id) {
           console.log(
             "Notification email ID:",
-            notificationEmail.data.id
+            notificationResult.data.id
           );
         }
       }
     } catch (error) {
       console.error(
-        "Business notification email failed:",
+        "Business notification failed:",
         error.message
       );
     }
@@ -397,15 +479,16 @@ Murang'a, Kenya
   return result;
 }
 
-// ------------------------------------------------------------
+// ============================================================
 // HEALTH CHECK
-// ------------------------------------------------------------
+// ============================================================
 
 app.get("/", (req, res) => {
   res.json({
     success: true,
 
-    message: "Maka-Villa backend is running!",
+    message:
+      "Maka-Villa backend is running!",
 
     service:
       "Maka-Villa Bar, Restaurant & Accommodation",
@@ -416,368 +499,405 @@ app.get("/", (req, res) => {
 
     endpoints: {
       bookings: "/api/bookings",
-      publicStatus: "/api/bookings/:reference"
+
+      publicStatus:
+        "/api/bookings/:reference"
     }
   });
 });
 
-// ------------------------------------------------------------
+// ============================================================
 // CREATE BOOKING
-// ------------------------------------------------------------
+// ============================================================
 
-app.post("/api/bookings", async (req, res) => {
-  console.log("");
-  console.log("=================================");
-  console.log("NEW BOOKING REQUEST");
-  console.log("=================================");
-
-  console.log("Request body:");
-  console.log(
-    JSON.stringify(req.body, null, 2)
-  );
-
-  try {
-    const body = req.body || {};
-
-    const booking = normalizeBooking(body);
-
-    console.log("Normalized booking:");
-
-    console.log(
-      JSON.stringify(booking, null, 2)
-    );
-
-    const bookingType =
-      booking.type.toLowerCase();
-
-    // --------------------------------------------------------
-    // BASIC VALIDATION
-    // --------------------------------------------------------
-
-    if (!booking.name || !booking.phone) {
-      console.log(
-        "VALIDATION FAILED: name or phone missing"
-      );
-
-      return res.status(400).json({
-        success: false,
-
-        error:
-          "Please provide your name and phone number."
-      });
-    }
-
-    // --------------------------------------------------------
-    // RESTAURANT / EVENT VALIDATION
-    // --------------------------------------------------------
-
-    if (
-      bookingType === "restaurant" ||
-      bookingType === "restaurant booking" ||
-      bookingType === "meal" ||
-      bookingType === "table" ||
-      bookingType === "bar & lounge" ||
-      bookingType === "bar and lounge" ||
-      bookingType === "event / function" ||
-      bookingType === "event/function" ||
-      bookingType === "event"
-    ) {
-      if (!booking.date) {
-        console.log(
-          "VALIDATION FAILED: restaurant/event date missing"
-        );
-
-        return res.status(400).json({
-          success: false,
-
-          error:
-            "Please provide the booking date."
-        });
-      }
-
-      const guestsNumber =
-        Number(booking.guests);
-
-      if (
-        booking.guests === "" ||
-        booking.guests === null ||
-        booking.guests === undefined ||
-        !Number.isFinite(guestsNumber) ||
-        guestsNumber < 1
-      ) {
-        console.log(
-          "VALIDATION FAILED: guests missing or invalid"
-        );
-
-        return res.status(400).json({
-          success: false,
-
-          error:
-            "Please provide the number of guests."
-        });
-      }
-
-      booking.guests = guestsNumber;
-    }
-
-    // --------------------------------------------------------
-    // ACCOMMODATION VALIDATION
-    // --------------------------------------------------------
-
-    if (
-      bookingType === "accommodation" ||
-      bookingType === "room" ||
-      bookingType === "hotel"
-    ) {
-      if (!booking.checkin) {
-        console.log(
-          "VALIDATION FAILED: check-in missing"
-        );
-
-        return res.status(400).json({
-          success: false,
-
-          error:
-            "Please provide the check-in date."
-        });
-      }
-
-      if (!booking.checkout) {
-        console.log(
-          "VALIDATION FAILED: check-out missing"
-        );
-
-        return res.status(400).json({
-          success: false,
-
-          error:
-            "Please provide the check-out date."
-        });
-      }
-
-      const guestsNumber =
-        Number(booking.guests);
-
-      if (
-        booking.guests !== "" &&
-        booking.guests !== null &&
-        booking.guests !== undefined
-      ) {
-        if (
-          !Number.isFinite(guestsNumber) ||
-          guestsNumber < 1
-        ) {
-          return res.status(400).json({
-            success: false,
-
-            error:
-              "Please provide a valid number of guests."
-          });
-        }
-
-        booking.guests = guestsNumber;
-      }
-    }
-
-    // --------------------------------------------------------
-    // CREATE BOOKING RECORD
-    // --------------------------------------------------------
-
-    const bookings = loadBookings();
-
-    const id =
-      bookings.length > 0
-        ? Math.max(
-            ...bookings.map(
-              (item) =>
-                Number(item.id) || 0
-            )
-          ) + 1
-        : 1;
-
-    const reference =
-      generateReference();
-
-    const newBooking = {
-      id,
-
-      reference,
-
-      name: booking.name,
-
-      phone: booking.phone,
-
-      email: booking.email,
-
-      type: booking.type,
-
-      date: booking.date,
-
-      time: booking.time,
-
-      guests: booking.guests,
-
-      checkin: booking.checkin,
-
-      checkout: booking.checkout,
-
-      room: booking.room,
-
-      message: booking.message,
-
-      details: booking.details,
-
-      status: "Pending",
-
-      createdAt:
-        new Date().toISOString()
-    };
-
-    bookings.push(newBooking);
-
-    const saved =
-      saveBookings(bookings);
-
-    if (!saved) {
-      return res.status(500).json({
-        success: false,
-
-        error:
-          "The booking could not be saved."
-      });
-    }
-
+app.post(
+  "/api/bookings",
+  async (req, res) => {
     console.log("");
     console.log(
-      "BOOKING SAVED SUCCESSFULLY"
+      "================================="
     );
 
     console.log(
-      "Reference:",
-      reference
-    );
-
-    console.log(
-      "Customer:",
-      booking.name
-    );
-
-    console.log(
-      "Phone:",
-      booking.phone
-    );
-
-    console.log(
-      "Type:",
-      booking.type
-    );
-
-    console.log(
-      "Status: Pending"
+      "NEW BOOKING REQUEST"
     );
 
     console.log(
       "================================="
     );
 
-    // --------------------------------------------------------
-    // SEND EMAILS AFTER BOOKING IS SAVED
-    // --------------------------------------------------------
-    // Important:
-    // If email sending fails, the booking still succeeds.
-    // --------------------------------------------------------
+    console.log("Request body:");
 
-    const emailResults =
-      await sendBookingEmails(
+    console.log(
+      JSON.stringify(
+        req.body,
+        null,
+        2
+      )
+    );
+
+    try {
+      const body =
+        req.body || {};
+
+      const booking =
+        normalizeBooking(body);
+
+      console.log(
+        "Normalized booking:"
+      );
+
+      console.log(
+        JSON.stringify(
+          booking,
+          null,
+          2
+        )
+      );
+
+      const bookingType =
+        booking.type.toLowerCase();
+
+      // ======================================================
+      // BASIC VALIDATION
+      // ======================================================
+
+      if (
+        !booking.name ||
+        !booking.phone
+      ) {
+        return res.status(400).json({
+          success: false,
+
+          error:
+            "Please provide your name and phone number."
+        });
+      }
+
+      // ======================================================
+      // RESTAURANT / BAR / EVENT VALIDATION
+      // ======================================================
+
+      if (
+        bookingType === "restaurant" ||
+        bookingType ===
+          "restaurant booking" ||
+        bookingType === "meal" ||
+        bookingType === "table" ||
+        bookingType ===
+          "bar & lounge" ||
+        bookingType ===
+          "bar and lounge" ||
+        bookingType === "event" ||
+        bookingType ===
+          "event / function" ||
+        bookingType ===
+          "event/function"
+      ) {
+        if (!booking.date) {
+          return res.status(400).json({
+            success: false,
+
+            error:
+              "Please provide the booking date."
+          });
+        }
+
+        const guestsNumber =
+          Number(booking.guests);
+
+        if (
+          booking.guests === "" ||
+          booking.guests === null ||
+          booking.guests === undefined ||
+          !Number.isFinite(
+            guestsNumber
+          ) ||
+          guestsNumber < 1
+        ) {
+          return res.status(400).json({
+            success: false,
+
+            error:
+              "Please provide the number of guests."
+          });
+        }
+
+        booking.guests =
+          guestsNumber;
+      }
+
+      // ======================================================
+      // ACCOMMODATION VALIDATION
+      // ======================================================
+
+      if (
+        bookingType ===
+          "accommodation" ||
+        bookingType === "room" ||
+        bookingType === "hotel"
+      ) {
+        if (!booking.checkin) {
+          return res.status(400).json({
+            success: false,
+
+            error:
+              "Please provide the check-in date."
+          });
+        }
+
+        if (!booking.checkout) {
+          return res.status(400).json({
+            success: false,
+
+            error:
+              "Please provide the check-out date."
+          });
+        }
+
+        if (
+          booking.guests !== "" &&
+          booking.guests !== null &&
+          booking.guests !== undefined
+        ) {
+          const guestsNumber =
+            Number(booking.guests);
+
+          if (
+            !Number.isFinite(
+              guestsNumber
+            ) ||
+            guestsNumber < 1
+          ) {
+            return res.status(400).json({
+              success: false,
+
+              error:
+                "Please provide a valid number of guests."
+            });
+          }
+
+          booking.guests =
+            guestsNumber;
+        }
+      }
+
+      // ======================================================
+      // CREATE BOOKING
+      // ======================================================
+
+      const bookings =
+        loadBookings();
+
+      const id =
+        bookings.length > 0
+          ? Math.max(
+              ...bookings.map(
+                (item) =>
+                  Number(item.id) || 0
+              )
+            ) + 1
+          : 1;
+
+      const reference =
+        generateReference();
+
+      const newBooking = {
+        id,
+
+        reference,
+
+        name:
+          booking.name,
+
+        phone:
+          booking.phone,
+
+        email:
+          booking.email,
+
+        type:
+          booking.type,
+
+        date:
+          booking.date,
+
+        time:
+          booking.time,
+
+        guests:
+          booking.guests,
+
+        checkin:
+          booking.checkin,
+
+        checkout:
+          booking.checkout,
+
+        room:
+          booking.room,
+
+        message:
+          booking.message,
+
+        details:
+          booking.details,
+
+        status:
+          "Pending",
+
+        createdAt:
+          new Date().toISOString()
+      };
+
+      bookings.push(
         newBooking
       );
 
-    // --------------------------------------------------------
-    // SUCCESS RESPONSE
-    // --------------------------------------------------------
+      const saved =
+        saveBookings(bookings);
 
-    return res.status(201).json({
-      success: true,
+      if (!saved) {
+        return res.status(500).json({
+          success: false,
 
-      message:
-        "Booking received successfully.",
+          error:
+            "The booking could not be saved."
+        });
+      }
 
-      reference,
+      console.log("");
+      console.log(
+        "BOOKING SAVED SUCCESSFULLY"
+      );
 
-      emailSent:
-        emailResults.emailSent,
+      console.log(
+        "Reference:",
+        reference
+      );
 
-      notificationSent:
-        emailResults.notificationSent,
+      console.log(
+        "Customer:",
+        booking.name
+      );
 
-      booking: {
-        id: newBooking.id,
+      console.log(
+        "Phone:",
+        booking.phone
+      );
+
+      console.log(
+        "Type:",
+        booking.type
+      );
+
+      console.log(
+        "Status: Pending"
+      );
+
+      console.log(
+        "================================="
+      );
+
+      // ======================================================
+      // SEND EMAILS
+      // ======================================================
+
+      const emailResults =
+        await sendBookingEmails(
+          newBooking
+        );
+
+      // ======================================================
+      // SUCCESS RESPONSE
+      // ======================================================
+
+      return res.status(201).json({
+        success: true,
+
+        message:
+          "Booking received successfully.",
 
         reference:
-          newBooking.reference,
 
-        name:
-          newBooking.name,
+          reference,
 
-        phone:
-          newBooking.phone,
+        emailSent:
+          emailResults.emailSent,
 
-        email:
-          newBooking.email,
+        notificationSent:
+          emailResults.notificationSent,
 
-        type:
-          newBooking.type,
+        booking: {
+          id:
+            newBooking.id,
 
-        date:
-          newBooking.date,
+          reference:
+            newBooking.reference,
 
-        time:
-          newBooking.time,
+          name:
+            newBooking.name,
 
-        guests:
-          newBooking.guests,
+          phone:
+            newBooking.phone,
 
-        checkin:
-          newBooking.checkin,
+          email:
+            newBooking.email,
 
-        checkout:
-          newBooking.checkout,
+          type:
+            newBooking.type,
 
-        room:
-          newBooking.room,
+          date:
+            newBooking.date,
 
-        status:
-          newBooking.status
-      }
-    });
-  } catch (error) {
-    console.error("");
-    console.error(
-      "BOOKING ERROR"
-    );
+          time:
+            newBooking.time,
 
-    console.error(error);
+          guests:
+            newBooking.guests,
 
-    console.error("");
+          checkin:
+            newBooking.checkin,
 
-    return res.status(500).json({
-      success: false,
+          checkout:
+            newBooking.checkout,
 
-      error:
-        "An unexpected server error occurred.",
+          room:
+            newBooking.room,
 
-      details:
-        process.env.NODE_ENV ===
-        "development"
-          ? error.message
-          : undefined
-    });
+          status:
+            newBooking.status
+        }
+      });
+    } catch (error) {
+      console.error("");
+      console.error(
+        "BOOKING ERROR"
+      );
+
+      console.error(error);
+
+      console.error("");
+
+      return res.status(500).json({
+        success: false,
+
+        error:
+          "An unexpected server error occurred.",
+
+        details:
+          process.env.NODE_ENV ===
+          "development"
+            ? error.message
+            : undefined
+      });
+    }
   }
-});
+);
 
-// ------------------------------------------------------------
+// ============================================================
 // GET ALL BOOKINGS
-// ------------------------------------------------------------
+// ============================================================
 
 app.get(
   "/api/bookings",
@@ -810,9 +930,9 @@ app.get(
   }
 );
 
-// ------------------------------------------------------------
+// ============================================================
 // PUBLIC BOOKING STATUS
-// ------------------------------------------------------------
+// ============================================================
 
 app.get(
   "/api/bookings/:reference",
@@ -829,8 +949,9 @@ app.get(
       const booking =
         bookings.find(
           (item) =>
-            clean(item.reference)
-              .toUpperCase() ===
+            clean(
+              item.reference
+            ).toUpperCase() ===
             reference
         );
 
@@ -897,9 +1018,9 @@ app.get(
   }
 );
 
-// ------------------------------------------------------------
+// ============================================================
 // ADMIN LOGIN
-// ------------------------------------------------------------
+// ============================================================
 
 app.post(
   "/api/admin/login",
@@ -923,8 +1044,10 @@ app.post(
       "makavilla123";
 
     if (
-      username === adminUsername &&
-      password === adminPassword
+      username ===
+        adminUsername &&
+      password ===
+        adminPassword
     ) {
       return res.json({
         success: true,
@@ -943,9 +1066,9 @@ app.post(
   }
 );
 
-// ------------------------------------------------------------
+// ============================================================
 // UPDATE BOOKING STATUS
-// ------------------------------------------------------------
+// ============================================================
 
 app.patch(
   "/api/bookings/:reference/status",
@@ -987,8 +1110,9 @@ app.patch(
       const index =
         bookings.findIndex(
           (item) =>
-            clean(item.reference)
-              .toUpperCase() ===
+            clean(
+              item.reference
+            ).toUpperCase() ===
             reference
         );
 
@@ -1007,7 +1131,17 @@ app.patch(
       bookings[index].updatedAt =
         new Date().toISOString();
 
-      saveBookings(bookings);
+      const saved =
+        saveBookings(bookings);
+
+      if (!saved) {
+        return res.status(500).json({
+          success: false,
+
+          error:
+            "Could not save booking status."
+        });
+      }
 
       res.json({
         success: true,
@@ -1034,9 +1168,9 @@ app.patch(
   }
 );
 
-// ------------------------------------------------------------
-// 404
-// ------------------------------------------------------------
+// ============================================================
+// 404 HANDLER
+// ============================================================
 
 app.use(
   (req, res) => {
@@ -1049,9 +1183,9 @@ app.use(
   }
 );
 
-// ------------------------------------------------------------
+// ============================================================
 // ERROR HANDLER
-// ------------------------------------------------------------
+// ============================================================
 
 app.use(
   (error, req, res, next) => {
@@ -1069,9 +1203,9 @@ app.use(
   }
 );
 
-// ------------------------------------------------------------
+// ============================================================
 // START SERVER
-// ------------------------------------------------------------
+// ============================================================
 
 app.listen(
   PORT,
@@ -1114,4 +1248,3 @@ app.listen(
     );
   }
 );
-```
